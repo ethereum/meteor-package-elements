@@ -16,7 +16,7 @@ You can add the class `dapp-small`, `dapp-medium` to make it smaller. Default si
 TODO: Icon is clickable and links to?
 
 ```html
-{> dapp_identicon identity='0x214243657890897654321' class="dapp-small"}}
+{{> dapp_identicon identity='0x214243657890897654321' class="dapp-small"}}
 ```
 
 
@@ -109,7 +109,7 @@ Router.current().render('dapp_modal_question', {
         cancel: true // simply show th cancel button and close the modal on click
     }
 });
-```js
+```
 
 The modal question can use i18n for the ok and cancel button texts.
 If the `TAPi18n` helper is available it will use `TAPi18n.__('buttons.ok')` and `TAPi18n.__('buttons.cancel')` for the buttons.
