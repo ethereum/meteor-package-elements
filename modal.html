@@ -1,0 +1,11 @@
+<template name="dapp_modal">
+    {{#Animate}}
+        <div class="dapp-modal-overlay animate">
+            <section class="dapp-modal-container">
+                {{#if yield}}
+                    {{> yield region="modalContent"}}
+                {{/if}}
+            </section>
+        </div>
+    {{/Animate}}
+</template>
