@@ -9,6 +9,8 @@ The following elements can be use anywhere in your dapp.
 
 ### Identicon
 
+![identicon](/screenshots/identicon.png?raw=true)
+
 Shows an identicon.
 
 You can add the class `dapp-small`, `dapp-medium` to make it smaller. Default size is to 64px.
@@ -22,6 +24,8 @@ TODO: Icon is clickable and links to?
 
 ### Address Input
 
+![addressInput](/screenshots/addressInput.png?raw=true)
+
 Creates a input field, with an identicon, which will change based on the input value.
 
 You can add the class `dapp-large` to make it a larger input.
@@ -32,6 +36,8 @@ You can add the class `dapp-large` to make it a larger input.
 
 
 ### Modal
+
+![modal](/screenshots/modal.png?raw=true)
 
 **Note** you need the `iron:router` package for this element.
 
@@ -88,6 +94,8 @@ To close it manually call `Router.current().render(null, {to: 'modal'});`.
 
 
 ### Modal Question
+
+![modal_question](/screenshots/modal_question.png?raw=true)
 
 **Note** you need the `iron:router` package for this element.
 
