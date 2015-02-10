@@ -1,0 +1,126 @@
+// MIXINS
+.dapp-overflow {
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+.dapp-shadow-none {
+    box-shadow: 0 0 0 rgba(0,0,0,0);
+}
+.dapp-shadow-small {
+    box-shadow: 0 0px 1px rgba(0,0,0,0.3);
+}
+.dapp-shadow-medium {
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+.dapp-shadow-large {
+    box-shadow: 0 1px 16px rgba(0,0,0,0.3);
+}
+
+// FORMS
+.dapp-input {
+    display: inline-block;
+    width: 300px;
+    max-width: 100%;
+    margin-top: @gridHeight;
+    padding: @defaultPaddingVertical/2 @defaultPaddingHorizontal/2;
+    padding-bottom: @defaultPaddingVertical/3;
+    border: 0;
+    border-bottom: solid 2px @colorGray;
+    box-sizing: border-box;
+    background-color: @colorGrayLight;
+    font-size: 1em;
+    font-weight: 300;
+    color: @colorLink;
+
+    .placeholder(@colorGray);
+
+    &:focus {
+        outline: 0;
+    }
+
+    &.dapp-large {
+        font-size: 1.5em;
+    }
+
+    &:disabled {
+        color: @colorGrayDark;
+    }
+}
+
+
+
+.dapp-identicon {
+    display: inline-block;
+    width: @gridWidth * 2;
+    height: @gridWidth * 2;
+    border-radius: 50%;
+    background-size: cover;
+    background-positon: 50% 50%;
+    box-shadow: inset rgba(255,255,255,0.5) 0 2px 2px, inset rgba(0,0,0,0.9) 0 -1px 8px;
+
+    &.dapp-small {
+        width: @gridWidth;
+        height: @gridWidth;
+    }
+    &.dapp-medium {
+        width: @gridWidth * 1.5;
+        height: @gridWidth * 1.5;
+    }
+}
+
+
+.dapp-modal-buttons {
+    position: relative;
+    .display(flex);
+    .justify-content(flex-end);
+    margin-top: @defaultMargin;
+    // background: @colorWhite;
+
+    button, a, a:visited {
+        .flex(1);
+        margin: 0 @defaultMargin/2;
+        height: 2*@gridHeight;
+        line-height: 2*@gridHeight;
+        font-family: @fontFamily;
+        font-size: 0.9em;
+        text-transform: uppercase;
+        font-weight: 400;
+        
+        &.dapp-primary-button {
+            font-weight: 600;
+        }
+    }
+}
+
+
+.dapp-address-input {
+    position: relative;
+
+    input {
+        .dapp-input;
+        z-index: 1;
+        margin-top: 0;
+        padding-left: @gridWidth*1.5;
+
+        &.dapp-large {
+            font-size: 1.5em;
+
+            & + .dapp-identicon {
+                top: 4px;
+                width: @gridWidth;
+                height: @gridWidth;
+            }
+        }
+
+    }
+    .dapp-identicon {
+        z-index: 2;
+        position: absolute;
+        top: 2px;
+        left: 4px;
+        width: @gridWidth/1.2;
+        height: @gridWidth/1.2;
+    }
+}
