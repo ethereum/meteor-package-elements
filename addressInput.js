@@ -32,9 +32,9 @@ Template['dapp_addressInput'].events({
     /**
     Set the to publicKey while typing
     
-    @event keyup input[name="to"]
+    @event keyup input[name="to"], input input[name="to"], change input[name="to"]
     */
-    'keyup input[name="to"]': function(e){
+    'keyup input[name="to"], input input[name="to"], change input[name="to"]': function(e){
         TemplateVar.set('toPublicKey', e.currentTarget.value);
     },
     /**
