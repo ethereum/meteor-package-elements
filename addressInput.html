@@ -1,6 +1,6 @@
 <template name="dapp_addressInput">
     <div class="dapp-address-input">
-        <input type="text" name="to" placeholder="{{placeholder}}" class="{{class}}" autofocus="true" value="{{value}}">
-        {{> dapp_identicon identity=toPublicKey class="dapp-small"}}
+        <input type="text" name="to" placeholder="{{placeholder}}" class="{{class}} {{#unless isValid}}dapp-error{{/unless}}" autofocus="true" value="{{value}}">
+        {{> dapp_identicon identity=address class="dapp-small"}}
     </div>
 </template>
