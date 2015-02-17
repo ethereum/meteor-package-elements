@@ -1,12 +1,13 @@
 Package.describe({
   name: 'ethereum:elements',
   summary: 'Basic elements for Dapps',
-  version: '0.1.0',
+  version: '0.1.1',
   git: 'http://github.com/ethereum/meteor-package-elements'
 });
 
 Package.onUse(function(api) {
   api.versionsFrom('1.0');
+  api.use('underscore', 'client');
   api.use('jquery', 'client');
   api.use('templating', 'client');
   api.use('less', 'client');

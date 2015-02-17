@@ -3,7 +3,8 @@ blaze@2.0.4
 blaze-tools@1.0.2
 deps@1.0.6
 ejson@1.0.5
-ethereum:elements@0.0.6
+ethereum:elements@0.1.0
+ethereum:tools@0.0.2
 frozeman:animation-helper@0.2.5
 frozeman:template-var@1.0.5
 geojson-utils@1.0.2
