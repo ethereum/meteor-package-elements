@@ -27,7 +27,7 @@ Template['dapp_addressInput'].helpers({
     @method (address)
     */
     'address': function(){
-        return TemplateVar.get('address');
+        return TemplateVar.get('address').replace('0x','');
     },
     /**
     Return the to address
@@ -47,7 +47,7 @@ Template['dapp_addressInput'].events({
     @event input input[name="to"], change input[name="to"]
     */
     'input input[name="to"], change input[name="to"]': function(e){
-        if(EthTools.isAddress(e.currentTarget.value))
+        if(EthTools.isAddress(e.currentTarget.value) || _.isEmpty(e.currentTarget.value))
             TemplateVar.set('isValid', true);
         else
             TemplateVar.set('isValid', false);

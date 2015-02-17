@@ -44,6 +44,12 @@
         font-size: 1.5em;
     }
 
+    &.dapp-error {
+        color: @colorError;
+        background: fadeout(@colorError, 90%);
+        border-color: fadeout(@colorError, 85%);
+    }
+
     &:disabled {
         color: @colorGrayDark;
     }
@@ -108,14 +114,14 @@
             font-size: 1.5em;
 
             & + .dapp-identicon {
-                top: 4px;
+                top: 6px;
                 width: @gridWidth;
                 height: @gridWidth;
             }
         }
 
         &.dapp-error {
-            border-color: @colorRed;
+            border-color: @colorError;
         }
 
     }
@@ -123,8 +129,16 @@
         z-index: 2;
         position: absolute;
         top: 3px;
-        left: 4px;
+        left: 5px;
         width: @gridWidth/1.2;
         height: @gridWidth/1.2;
+    }
+
+    .icon-shield {
+        position: absolute;
+        top: 12px;
+        left: 13px;
+        font-size: 1.4em;        
+        color: @colorError;
     }
 }

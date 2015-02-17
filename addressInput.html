@@ -1,6 +1,10 @@
 <template name="dapp_addressInput">
     <div class="dapp-address-input">
         <input type="text" name="to" placeholder="{{placeholder}}" class="{{class}} {{#unless isValid}}dapp-error{{/unless}}" autofocus="true" value="{{value}}">
-        {{> dapp_identicon identity=address class="dapp-small"}}
+        {{#if isValid}}
+            {{> dapp_identicon identity=address class="dapp-small"}}
+        {{else}}
+            <i class="icon-shield"></i>
+        {{/if}}
     </div>
 </template>
