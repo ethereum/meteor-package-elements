@@ -47,6 +47,8 @@ Just place a modal region before the closing body tag.
 {{> yield region="modal"}}
 ```
 
+## Render as route
+
 Then you can render the modal and its content inside using a route as follows:
 
 ```js
@@ -55,7 +57,7 @@ Router.route('/myRoute', function () {
     this.render('dapp_modal', {
         to: 'modal',
         data: {
-            closePath: '/dashboard' // set this property if you want to determine where to go when the modal overlay is clicked.
+            closePath: '/dashboard' // this property can be set if you want to determine where to go when the modal overlay is clicked.
         }
     });
     this.render('myContentTemplate', {
@@ -69,6 +71,8 @@ Router.route('/myRoute', function () {
 });
 ```
 
+## Render without route
+
 You can also render the modal without a route:
 
 ```js
@@ -81,6 +85,8 @@ Router.current().render('myContentTemplate', {
 });
 ```
 
+## Close modal
+
 To remove the modal in another route call the following in the `onBeforeAction` hook e.g.:
 
 ```js
@@ -90,7 +96,21 @@ Router.route('/anotherRoute', function () {
 });
 ```
 
-To close it manually call `Router.current().render(null, {to: 'modal'});`.
+To close it programatically call `Router.current().render(null, {to: 'modal'});`.
+
+
+## Prevent modal closing when the overlay is clicked
+
+You can pass the `closable = false` property to the data context of the modal, to prevent it from beeing closed when the overlay is clicked.
+
+```js
+Router.current().render('dapp_modal', {
+    to: 'modal',
+    data: {
+        closable: false
+    }
+});
+```
 
 
 ### Modal Question

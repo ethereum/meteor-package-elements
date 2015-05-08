@@ -40,11 +40,14 @@ Template['dapp_modal'].events({
     Hide the modal on click. If the data context has the property "closePath",
     it will route to this one instead of going back in the browser history.
 
+    If the "closeable" is FALSE, it won't close the modal, when clicking the overlay.
+
     @event click .dapp-modal-overlay
     */
-    'click .dapp-modal-overlay': function(e){
+    'click .dapp-modal-overlay': function(e, template){
+
         // hide the modal
-        if($(e.target).hasClass('dapp-modal-overlay')) {
+        if($(e.target).hasClass('dapp-modal-overlay') && this.closeable !== false) {
 
             if(typeof Router !== 'undefined') {
 
