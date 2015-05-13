@@ -28,7 +28,7 @@ Template['dapp_addressInput'].helpers({
     */
     'address': function(){
         var address = TemplateVar.get('address');
-        return (_.isString(address)) ? address.replace('0x','') : '';
+        return (_.isString(address)) ? '0x'+ address.replace('0x','') : '';
     },
     /**
     Return the to address
