@@ -1,7 +1,7 @@
 Package.describe({
   name: 'ethereum:elements',
   summary: 'Basic elements for Dapps',
-  version: '0.1.5',
+  version: '0.1.6',
   git: 'http://github.com/ethereum/meteor-package-elements'
 });
 
@@ -12,7 +12,6 @@ Package.onUse(function(api) {
   api.use('templating', 'client');
   api.use('less', 'client');
 
-  api.use('ethereum:tools@0.0.2', 'client');
   api.use('frozeman:animation-helper@0.2.5', 'client');
   api.use('frozeman:template-var@1.0.5', 'client');
   api.use('mistereo:identicon@1.0.0', 'client');
@@ -24,6 +23,8 @@ Package.onUse(function(api) {
   api.addFiles('icons/simple-line-icons.css', 'client');
 
   api.addFiles('main.less', 'client');
+
+  api.addFiles('helpers.js', 'client');
 
   api.addFiles('identicon.html', 'client');
   api.addFiles('identicon.js', 'client');

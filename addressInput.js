@@ -28,7 +28,7 @@ Template['dapp_addressInput'].helpers({
     */
     'address': function(){
         var address = TemplateVar.get('address');
-        return (_.isString(address)) ? '0x'+ address.replace('0x','') : '';
+        return (_.isString(address)) ? '0x'+ address.replace('0x','') : false;
     },
     /**
     Return the to address
@@ -47,12 +47,16 @@ Template['dapp_addressInput'].events({
     
     @event input input[name="to"], change input[name="to"]
     */
-    'input input[name="to"], change input[name="to"]': function(e){
-        if(EthTools.isAddress(e.currentTarget.value) || _.isEmpty(e.currentTarget.value))
+    'input input[name="to"], change input[name="to"]': function(e, template){
+        if(Helpers.isAddress(e.currentTarget.value) || _.isEmpty(e.currentTarget.value))
             TemplateVar.set('isValid', true);
         else
             TemplateVar.set('isValid', false);
-        TemplateVar.set('address', e.currentTarget.value);
+
+        if(_.isEmpty(e.currentTarget.value))
+            TemplateVar.set(template, 'address', false);
+        else
+            TemplateVar.set(template, 'address', e.currentTarget.value);
     },
     /**
     Prevent the identicon from beeing clicked.
