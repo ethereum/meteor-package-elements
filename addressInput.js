@@ -28,6 +28,10 @@ Template['dapp_addressInput'].helpers({
     */
     'address': function(){
         var address = TemplateVar.get('address');
+
+        if(Template.instance().view.isRendered && Template.instance().find('input').value !== address)
+            Template.instance().$('input').trigger('change');
+
         return (_.isString(address)) ? '0x'+ address.replace('0x','') : false;
     },
     /**
@@ -37,6 +41,21 @@ Template['dapp_addressInput'].helpers({
     */
     'isValid': function(){
         return TemplateVar.get('isValid');
+    },
+    /**
+    Return the autofocus or disabled attribute.
+
+    @method (additionalAttributes)
+    */
+    'additionalAttributes': function(){
+        var attr = {};
+
+        if(this.autofocus)
+            attr.autofocus = true;
+        if(this.disabled)
+            attr.disabled = true;
+
+        return attr;
     }
 });
 
@@ -45,9 +64,9 @@ Template['dapp_addressInput'].events({
     /**
     Set the to address while typing
     
-    @event input input[name="to"], change input[name="to"]
+    @event input input, change input
     */
-    'input input[name="to"], change input[name="to"]': function(e, template){
+    'input input, change input': function(e, template){
         if(Helpers.isAddress(e.currentTarget.value) || _.isEmpty(e.currentTarget.value))
             TemplateVar.set('isValid', true);
         else
