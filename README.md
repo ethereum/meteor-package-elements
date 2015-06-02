@@ -13,14 +13,18 @@ The following elements can be use anywhere in your dapp.
 
 Shows an identicon.
 
-You can add the class `dapp-small`, `dapp-medium` to make it smaller. Default size is to 64px.
-
-TODO: Icon is clickable and links to?
+You can add the class `dapp-tiny`, `dapp-small`, `dapp-medium` to make it smaller. Default size is to 64px.
 
 ```html
 {{> dapp_identicon identity='0x214243657890897654321' class="dapp-small"}}
 ```
 
+Additionally you can provide a URL, which the identicon will link to.
+
+```html
+{{> dapp_identicon identity='0x214243657890897654321' link="/mypath/"}}
+
+```
 
 ### Address Input
 

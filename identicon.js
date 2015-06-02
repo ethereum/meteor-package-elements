@@ -14,11 +14,20 @@ Return the user identity icon
 
 Template['dapp_identicon'].helpers({
     /**
-    The current users identity
+    Return the route name and route parameter
 
-    @method identity
+    @method route
     */
-    // 'identity': function(e){
-    //     return this.identity || 'hj'; // hj creates a nice icon with person
-    // }
+//     'route': function(){
+//         if(!this.route)
+//             return;
+
+//         var returnValue = {
+//             route: this.route,
+//         };
+
+//         returnValue[this.routeParam || 'identity'] = this.identity;
+// console.log(returnValue);
+//         return returnValue;
+//     }
 });
