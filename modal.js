@@ -34,7 +34,6 @@ Template['dapp_modal'].destroyed = function(){
 };
 
 
-
 Template['dapp_modal'].events({
     /**
     Hide the modal on click. If the data context has the property "closePath",

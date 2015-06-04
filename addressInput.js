@@ -35,14 +35,6 @@ Template['dapp_addressInput'].helpers({
         return (_.isString(address)) ? '0x'+ address.replace('0x','') : false;
     },
     /**
-    Return the to address
-
-    @method (isValid)
-    */
-    'isValid': function(){
-        return TemplateVar.get('isValid');
-    },
-    /**
     Return the autofocus or disabled attribute.
 
     @method (additionalAttributes)
