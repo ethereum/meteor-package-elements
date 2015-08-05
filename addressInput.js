@@ -17,7 +17,7 @@ Template['dapp_addressInput'].created = function(){
     TemplateVar.set('isValid', true);
 
     if(this.data.value)
-        TemplateVar.set('address', this.data.value);
+        TemplateVar.set('value', this.data.value);
 };
 
 Template['dapp_addressInput'].helpers({
@@ -27,7 +27,7 @@ Template['dapp_addressInput'].helpers({
     @method (address)
     */
     'address': function(){
-        var address = TemplateVar.get('address');
+        var address = TemplateVar.get('value');
 
         if(Template.instance().view.isRendered && Template.instance().find('input').value !== address)
             Template.instance().$('input').trigger('change');
@@ -59,7 +59,19 @@ Template['dapp_addressInput'].events({
     @event input input, change input
     */
     'input input, change input': function(e, template){
-        var value = s.trim(e.currentTarget.value);
+        var value = e.currentTarget.value;
+
+        // remove whitespaces
+        if(value.indexOf(' ') !== -1) {
+            value = value.replace(/ +/, '');
+            e.currentTarget.value = value;
+        }
+
+        // add 0x
+        if(value.length > 2 && value.indexOf('0x') === -1) {
+            value = '0x'+ value;
+            e.currentTarget.value = value;
+        }
 
         if(web3.isAddress(value) || _.isEmpty(value))
             TemplateVar.set('isValid', true);
@@ -67,11 +79,9 @@ Template['dapp_addressInput'].events({
             TemplateVar.set('isValid', false);
 
         if(_.isEmpty(value))
-            TemplateVar.set(template, 'address', false);
+            TemplateVar.set(template, 'value', false);
         else
-            TemplateVar.set(template, 'address', value);
-
-        e.currentTarget.value = value;
+            TemplateVar.set(template, 'value', value);
     },
     /**
     Prevent the identicon from beeing clicked.

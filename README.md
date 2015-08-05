@@ -12,6 +12,7 @@ The following elements can be use anywhere in your dapp.
 Additionally this package exposes the following packages:
 
 - [ethereum:tools](https://atmospherejs.com/ethereum/tools), which gives you `EthTools`.
+- [frozeman:template-var](https://atmospherejs.com/frozeman/template-var), which gives you the `TemplateVar.set()/.get()` functions which can be used to get values from the select account, or address input element.
 - [frozeman:storage](https://atmospherejs.com/frozeman/storage), which gives you the `LocalStore.set()/.get()` functions (used for `dapp_formatBalance`).
 
 
@@ -24,13 +25,13 @@ Shows an identicon.
 You can add the class `dapp-tiny`, `dapp-small`, `dapp-medium` to make it smaller. Default size is to 64px.
 
 ```html
-{{> dapp_identicon identity='0x214243657890897654321' class="dapp-small"}}
+{{> dapp_identicon identity='0x922a519ac926f69856fcfc1b2b8b846cfb3f6b4e' class="dapp-small"}}
 ```
 
 Additionally you can provide a URL, which the identicon will link to.
 
 ```html
-{{> dapp_identicon identity='0x214243657890897654321' link="/mypath/"}}
+{{> dapp_identicon identity='0x922a519ac926f69856fcfc1b2b8b846cfb3f6b4e' link="/mypath/"}}
 
 ```
 
@@ -43,12 +44,80 @@ Creates a input field, with an identicon, which will change based on the input v
 You can add the class `dapp-large` to make it a larger input.
 
 ```html
-{{> dapp_addressInput placeholder="0x000000.." value="Default Value" class="dapp-large"}}
+{{> dapp_addressInput placeholder="0x000000.." value="Default Value"}}
+```
+
+**Setting size**
+
+By passing `class="dapp-large"` you can have a larger version of the input:
+
+```html
+{{> dapp_addressInput placeholder="0x000000.." class="dapp-large"}}
+```
+
+**Getting values reactively**
+
+Getting the value using `TemplateVar` you can grap the templates reactive var using:
+
+```js
+TemplateVar.getFrom('.my-container-element .dapp-address-input', 'value');
+```
+
+### Select account
+
+![select account](https://raw.githubusercontent.com/ethereum/meteor-package-elements/master/screenshots/selectAccount.png)
+![select account clicked](https://raw.githubusercontent.com/ethereum/meteor-package-elements/master/screenshots/selectAccount1.png)
+
+
+Creates a select, which can allow to select accounts. The provided array needs to have at least the follwing properties:
+
+```js
+var myAccounts = [{
+    type: "account",
+    name: 'My Account 1',
+    balance: '1000000000000000000', // in wei
+    address: '0x922a519ac926f69856fcfc1b2b8b846cfb3f6b4e'
+},
+{
+    name: 'My Other Address',
+    balance: '324567543200000013456', // in wei
+    address: '0x1f93d965f60faee1085a93e99562945c1bd97be0'
+}]
+```
+
+```html
+{{> dapp_selectAccount accounts=myAccounts}}
+```
+
+This element works also well with the [ethereum:accounts](https://atmospherejs.com/ethereum/accounts) package, which provides you with `EthAccounts.find().fetch()` to get all current accounts.
+
+**Setting size**
+
+By passing `class="dapp-large"` you can have a larger version of the select box:
+
+```html
+{{> dapp_selectAccount accounts=myAccounts class="dapp-large"}}
+```
+
+**Show icon**
+
+If you add the `showAccountTypes=true` property it will show a key unicode icon for all accounts with the `type='account'` property (set for `EthAccounts` accounts). 
+
+```html
+{{> dapp_selectAccount accounts=myAccounts showAccountTypes=true}}
+```
+
+**Getting values reactively**
+
+Getting the value using `TemplateVar` you can grap the templates reactive var using:
+
+```js
+TemplateVar.getFrom('.my-container-element .dapp-select-account', 'value');
 ```
 
 ### Format balances
 
-![addressInput](https://raw.githubusercontent.com/ethereum/meteor-package-elements/master/screenshots/formatBalance.png)
+![format balances](https://raw.githubusercontent.com/ethereum/meteor-package-elements/master/screenshots/formatBalance.png)
 
 To format a wei value to any ether unit, you can use the following helper:
 
