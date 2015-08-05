@@ -1,7 +1,7 @@
 Package.describe({
   name: 'ethereum:elements',
   summary: 'Basic elements for Dapps',
-  version: '0.2.0',
+  version: '0.2.1',
   git: 'http://github.com/ethereum/meteor-package-elements'
 });
 
@@ -12,9 +12,16 @@ Package.onUse(function(api) {
   api.use('templating', 'client');
   api.use('less', 'client');
 
+  api.use('ethereum:web3@0.9.0', 'client');
+  api.use('ethereum:tools@0.0.7', ['client', 'server']);
+  api.imply('ethereum:tools@0.0.7', ['client', 'server']);
   api.use('frozeman:animation-helper@0.2.5', 'client');
   api.use('frozeman:template-var@1.1.1', 'client');
   api.use('mistereo:identicon@1.0.0', 'client');
+  api.use('underscorestring:underscore.string@3.1.1', 'client');
+
+  api.export(['web3'], 'client'); // we need to expose web3.js, so that the app, can re-use this one, instead of having two instances
+
 
   api.addFiles('icons/Simple-Line-Icons.svg', 'client');
   api.addFiles('icons/Simple-Line-Icons.ttf', 'client');
@@ -24,13 +31,14 @@ Package.onUse(function(api) {
 
   api.addFiles('main.less', 'client');
 
-  api.addFiles('helpers.js', 'client');
+  api.addFiles('globalHelpers.js', 'client');
 
   api.addFiles('identicon.html', 'client');
   api.addFiles('identicon.js', 'client');
 
   api.addFiles('addressInput.html', 'client');
   api.addFiles('addressInput.js', 'client');
+
 
   api.addFiles('modal.html', 'client');
   api.addFiles('modal.js', 'client');

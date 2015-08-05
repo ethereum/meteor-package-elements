@@ -59,15 +59,19 @@ Template['dapp_addressInput'].events({
     @event input input, change input
     */
     'input input, change input': function(e, template){
-        if(Helpers.isAddress(e.currentTarget.value) || _.isEmpty(e.currentTarget.value))
+        var value = s.trim(e.currentTarget.value);
+
+        if(web3.isAddress(value) || _.isEmpty(value))
             TemplateVar.set('isValid', true);
         else
             TemplateVar.set('isValid', false);
 
-        if(_.isEmpty(e.currentTarget.value))
+        if(_.isEmpty(value))
             TemplateVar.set(template, 'address', false);
         else
-            TemplateVar.set(template, 'address', e.currentTarget.value);
+            TemplateVar.set(template, 'address', value);
+
+        e.currentTarget.value = value;
     },
     /**
     Prevent the identicon from beeing clicked.

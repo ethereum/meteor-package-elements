@@ -1,15 +1,23 @@
 # Ethereum elements
 
+A collection of basic Meteor templates/components to make dapps faster to build.
+
+Its recommended to use these elements along with the [Ðapp styles](https://github.com/ethereum/dapp-styles).
 
 
 ## Usage
 
 The following elements can be use anywhere in your dapp.
 
+Additionally this package exposes the following packages:
+
+- [ethereum:tools](https://atmospherejs.com/ethereum/tools), which gives you `EthTools`.
+- [frozeman:storage](https://atmospherejs.com/frozeman/storage), which gives you the `LocalStore.set()/.get()` functions (used for `dapp_formatBalance`).
+
 
 ### Identicon
 
-![identicon](/screenshots/identicon.png?raw=true)
+![identicon](https://raw.githubusercontent.com/ethereum/meteor-package-elements/master/screenshots/identicon.png)
 
 Shows an identicon.
 
@@ -28,7 +36,7 @@ Additionally you can provide a URL, which the identicon will link to.
 
 ### Address Input
 
-![addressInput](/screenshots/addressInput.png?raw=true)
+![addressInput](https://raw.githubusercontent.com/ethereum/meteor-package-elements/master/screenshots/addressInput.png)
 
 Creates a input field, with an identicon, which will change based on the input value.
 
@@ -38,10 +46,27 @@ You can add the class `dapp-large` to make it a larger input.
 {{> dapp_addressInput placeholder="0x000000.." value="Default Value" class="dapp-large"}}
 ```
 
+### Format balances
+
+![addressInput](https://raw.githubusercontent.com/ethereum/meteor-package-elements/master/screenshots/formatBalance.png)
+
+To format a wei value to any ether unit, you can use the following helper:
+
+```html
+{{dapp_formatBalance "1000000133" "0,0.00[0000]" "ether"}}
+```
+
+If you leave the last value it will use `LocalStore.get('etherUnit')`, as reactive localstorage variable.
+
+```html
+{{dapp_formatBalance "1000000133" "0,0.00"}}
+```
+
+Use then `LocalStore.set('dapp_etherUnit', 'finney')` to change the unit and displayed balances.
 
 ### Modal
 
-![modal](/screenshots/modal.png?raw=true)
+![modal](https://raw.githubusercontent.com/ethereum/meteor-package-elements/master/screenshots/modal.png)
 
 **Note** you need the `iron:router` package for this element.
 
@@ -119,7 +144,7 @@ Router.current().render('dapp_modal', {
 
 ### Modal Question
 
-![modal_question](/screenshots/modal_question.png?raw=true)
+![modal_question](https://raw.githubusercontent.com/ethereum/meteor-package-elements/master/screenshots/modal_question.png)
 
 **Note** you need the `iron:router` package for this element.
 
