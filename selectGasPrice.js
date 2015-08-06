@@ -32,9 +32,10 @@ Calculates the gas * gas price.
 @method calculateGasInWei
 @return {Number}
 */
-var calculateGasInWei = function(template, gas, unit, returnGasPrice){
+var calculateGasInWei = function(template, gas, gasPrice, unit, returnGasPrice){
     // console.log('Estimated gas: ', gas);
-    var suggestedGasPrice = web3.fromWei(new BigNumber(EthBlocks.latest.gasPrice || defaultGasPrice, 10), unit || LocalStore.get('dapp_etherUnit'));
+    var suggestedGasPrice = web3.fromWei(new BigNumber(String(gasPrice || defaultGasPrice), 10), unit || LocalStore.get('dapp_etherUnit'));
+
     return (returnGasPrice)
         ? suggestedGasPrice.times(new BigNumber(toPowerFactor).toPower(TemplateVar.get(template, 'feeMultiplicator')))
         : suggestedGasPrice.times(gas).times(new BigNumber(toPowerFactor).toPower(TemplateVar.get(template, 'feeMultiplicator')));
@@ -54,13 +55,13 @@ Template['dapp_selectGasPrice'].helpers({
     @method (fee)
     */
     'fee': function(){
-        if(_.isFinite(TemplateVar.get('feeMultiplicator')))
+        if(_.isFinite(TemplateVar.get('feeMultiplicator')) && _.isFinite(this.gas) && _.isFinite(this.gasPrice))
             // set the value
-            TemplateVar.set('gasInWei', calculateGasInWei(Template.instance(), this.gas, 'wei').floor().toString(10));
-            TemplateVar.set('gasPrice', calculateGasInWei(Template.instance(), this.gas, 'wei', true).floor().toString(10));
+            TemplateVar.set('gasInWei', calculateGasInWei(Template.instance(), this.gas, this.gasPrice, 'wei').floor().toString(10));
+            TemplateVar.set('gasPrice', calculateGasInWei(Template.instance(), this.gas, this.gasPrice, 'wei', true).floor().toString(10));
 
             // return the fee
-            return EthTools.formatNumber(calculateGasInWei(Template.instance(), this.gas, this.unit).toString(10), '0,0.[00000000]');
+            return EthTools.formatNumber(calculateGasInWei(Template.instance(), this.gas, this.gasPrice, this.unit).toString(10), '0,0.[00000000]');
     },
     /**
     Get the current unit.

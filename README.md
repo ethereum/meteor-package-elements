@@ -13,12 +13,11 @@ The following elements can be use anywhere in your dapp.
 Additionally this package exposes the following packages:
 
 - [ethereum:tools](https://atmospherejs.com/ethereum/tools), which gives you `EthTools`.
-- [ethereum:blocks](https://atmospherejs.com/ethereum/blocks), which gives you `EthBlocks`.
 - [frozeman:template-var](https://atmospherejs.com/frozeman/template-var), which gives you the `TemplateVar.set()/.get()` functions which can be used to get values from the select account, or address input element.
 - [frozeman:storage](https://atmospherejs.com/frozeman/storage), which gives you the `LocalStore.set()/.get()` functions (used for `dapp_formatBalance`).
 
 Note that these packages will only be exposed to your client part of your dapp,
-if you want to use e.g. `EthBlocks` on the server side add the package manually using `$ meteor add ethereum:blocks`.
+if you want to use e.g. `EthTools` on the server side add the package manually using `$ meteor add ethereum:tools`.
 
 ### Identicon
 
@@ -127,16 +126,18 @@ TemplateVar.getFrom('.my-container-element .dapp-select-account', 'value');
 This element allows you users to adjust the fee (gas * gas price) of a transaction, and gives you back either the `gasInWei` or the selected `gasPrice`.
 
 You need to provide a gas estimation which you can get using e.g. `web3.eth.estimateGas({from: .., to: .., data: ..})` or `myContract.myMethod.estimateGas({from: ..})`
-and the tool will display whats the current medium gas price based on `EthBlocks.latest.gasPrice` * your gas usage estimation.
+and the tool will display whats the current medium gas price based on the given `gasPrice` * your gas usage estimation.
 
 The user then can adjust the fee up and down by a factor of ~1.8.
 
+*Hint*: To get the gas price reactivly you can use the [ethereum:blocks](https://atmospherejs.com/ethereum/blocks) package's `EthBlocks.latest.gasPrice` and pass it to the `gasPrice` property.
+
 
 ```html
-{{> dapp_selectGasPrice gas=21000 unit='ether'}}
+{{> dapp_selectGasPrice gas=21000 gasPrice=50000000000 unit="ether"}}
 ```
 
-Note: If you don't set the `unit` property it will use `LocalStore.get('dapp_etherUnit')`, like the `{{> dapp_formatBalance}}` element.
+*Note*: If you don't set the `unit` property it will use `LocalStore.get('dapp_etherUnit')`, like the `{{> dapp_formatBalance}}` element.
 
 **Getting values reactively**
 
