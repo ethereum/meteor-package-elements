@@ -6,6 +6,10 @@ Its recommended to use these elements along with the [Ðapp styles](https://gith
 
 You can find a [Demo here](http://ethereum-elements.meteor.com).
 
+## Installation
+
+    $ meteor add ethereum:elements
+
 ## Usage
 
 The following elements can be use anywhere in your dapp.
