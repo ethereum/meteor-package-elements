@@ -4,6 +4,7 @@ A collection of basic Meteor templates/components to make dapps faster to build.
 
 Its recommended to use these elements along with the [Ðapp styles](https://github.com/ethereum/dapp-styles).
 
+You can find a [Demo here](http://ethereum-elements.meteor.com).
 
 ## Usage
 
@@ -12,9 +13,12 @@ The following elements can be use anywhere in your dapp.
 Additionally this package exposes the following packages:
 
 - [ethereum:tools](https://atmospherejs.com/ethereum/tools), which gives you `EthTools`.
+- [ethereum:blocks](https://atmospherejs.com/ethereum/blocks), which gives you `EthBlocks`.
 - [frozeman:template-var](https://atmospherejs.com/frozeman/template-var), which gives you the `TemplateVar.set()/.get()` functions which can be used to get values from the select account, or address input element.
 - [frozeman:storage](https://atmospherejs.com/frozeman/storage), which gives you the `LocalStore.set()/.get()` functions (used for `dapp_formatBalance`).
 
+Note that these packages will only be exposed to your client part of your dapp,
+if you want to use e.g. `EthBlocks` on the server side add the package manually using `$ meteor add ethereum:blocks`.
 
 ### Identicon
 
@@ -115,6 +119,45 @@ Getting the value using `TemplateVar` you can grap the templates reactive var us
 TemplateVar.getFrom('.my-container-element .dapp-select-account', 'value');
 ```
 
+### Gas price selection
+
+![select gas price](https://raw.githubusercontent.com/ethereum/meteor-package-elements/master/screenshots/selectGasPrice.png)
+
+
+This element allows you users to adjust the fee (gas * gas price) of a transaction, and gives you back either the `gasInWei` or the selected `gasPrice`.
+
+You need to provide a gas estimation which you can get using e.g. `web3.eth.estimateGas({from: .., to: .., data: ..})` or `myContract.myMethod.estimateGas({from: ..})`
+and the tool will display whats the current medium gas price based on `EthBlocks.latest.gasPrice` * your gas usage estimation.
+
+The user then can adjust the fee up and down by a factor of ~1.8.
+
+
+```html
+{{> dapp_selectGasPrice gas=21000 unit='ether'}}
+```
+
+Note: If you don't set the `unit` property it will use `LocalStore.get('dapp_etherUnit')`, like the `{{> dapp_formatBalance}}` element.
+
+**Getting values reactively**
+
+To get the `gasInWei` (gas * adjusted gas price) or the adjusted `gasPrice` use:
+
+```js
+TemplateVar.getFrom('.my-container-element .dapp-select-gas-price', 'gasPrice');
+// "56258440003" ~ 56 gwei
+
+// or the total fee when providing a estimated gas usage of 21000
+
+TemplateVar.getFrom('.my-container-element .dapp-select-gas-price', 'gasInWei');
+// "1181427240063000" which is "0.001181427240063" ether
+```
+
+**Localization**
+
+The element can replace the - and + texts below the range selection using the `tap:i18n` package.
+If the `TAPi18n` helper is available it will use `TAPi18n.__('elements.selectGasPrice.high')` and `TAPi18n.__('elements.selectGasPrice.low')` for the texts.
+
+
 ### Format balances
 
 ![format balances](https://raw.githubusercontent.com/ethereum/meteor-package-elements/master/screenshots/formatBalance.png)
@@ -133,7 +176,9 @@ If you leave the last value it will use `LocalStore.get('etherUnit')`, as reacti
 
 Use then `LocalStore.set('dapp_etherUnit', 'finney')` to change the unit and displayed balances.
 
-### Modal
+***
+
+### Modals
 
 ![modal](https://raw.githubusercontent.com/ethereum/meteor-package-elements/master/screenshots/modal.png)
 
@@ -237,5 +282,7 @@ Router.current().render('dapp_modal_question', {
 });
 ```
 
-The modal question can use i18n for the ok and cancel button texts.
+**Localization**
+
+The modal question can use the `tap:i18n` package for the ok and cancel button texts.
 If the `TAPi18n` helper is available it will use `TAPi18n.__('buttons.ok')` and `TAPi18n.__('buttons.cancel')` for the buttons.

@@ -1,7 +1,7 @@
 Package.describe({
   name: 'ethereum:elements',
   summary: 'Basic elements for Dapps',
-  version: '0.3.0',
+  version: '0.3.1',
   git: 'http://github.com/ethereum/meteor-package-elements'
 });
 
@@ -13,12 +13,18 @@ Package.onUse(function(api) {
   api.use('less', 'client');
 
   api.use('ethereum:web3@0.9.0', 'client');
-  api.use('ethereum:tools@0.1.0', ['client', 'server']);
-  api.imply('ethereum:tools@0.1.0', ['client', 'server']);
+  api.use('ethereum:tools@0.1.0', 'client');
+  api.imply('ethereum:tools@0.1.0', 'client');
+  api.use('ethereum:blocks@0.1.6', 'client');
+  api.imply('ethereum:blocks@0.1.6', 'client');
   api.use('frozeman:animation-helper@0.2.5', 'client');
   api.use('frozeman:template-var@1.1.1', 'client');
   api.imply('frozeman:template-var@1.1.1', 'client');
+  api.use('frozeman:storage@0.1.8', 'client');
+  api.imply('frozeman:storage@0.1.8', 'client');
+  
   api.use('mistereo:identicon@1.0.0', 'client');
+  api.use('3stack:bignumber@2.0.0', 'client');
   // api.use('underscorestring:underscore.string@3.1.1', 'client');
 
   api.export(['web3'], 'client'); // we need to expose web3.js, so that the app, can re-use this one, instead of having two instances
@@ -42,6 +48,9 @@ Package.onUse(function(api) {
 
   api.addFiles('selectAccount.html', 'client');
   api.addFiles('selectAccount.js', 'client');
+
+  api.addFiles('selectGasPrice.html', 'client');
+  api.addFiles('selectGasPrice.js', 'client');
 
   api.addFiles('modal.html', 'client');
   api.addFiles('modal.js', 'client');
