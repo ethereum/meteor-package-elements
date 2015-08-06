@@ -19,9 +19,9 @@ Look the scrolling of the body
 
 @method rendered
 */
-Template['dapp_modal'].created = function(){
+Template['dapp_modal'].onCreated(function(){
     $('body').addClass('disable-scroll blur');
-};
+});
 
 
 /**
@@ -29,9 +29,9 @@ Remove look of scrolling from the body
 
 @method rendered
 */
-Template['dapp_modal'].destroyed = function(){
+Template['dapp_modal'].onDestroyed(function(){
     $('body').removeClass('disable-scroll blur');
-};
+});
 
 
 Template['dapp_modal'].events({

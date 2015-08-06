@@ -11,14 +11,21 @@ The address input template, containg the identicon.
 @constructor
 */
 
-Template['dapp_addressInput'].created = function(){
+Template['dapp_addressInput'].onCreated(function(){
 
     // default set to true, to show no error
     TemplateVar.set('isValid', true);
 
-    if(this.data.value)
+    if(this.data.value) {
         TemplateVar.set('value', this.data.value);
-};
+    }
+});
+
+Template['dapp_addressInput'].onRendered(function(){
+    if(this.data.value) {
+        this.$('input').trigger('change');
+    }
+});
 
 Template['dapp_addressInput'].helpers({
     /**
