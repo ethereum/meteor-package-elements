@@ -63,7 +63,7 @@ Template['dapp_selectGasPrice'].helpers({
             TemplateVar.set('gasPrice', calculateGasInWei(Template.instance(), this.gas, this.gasPrice, true).floor().toString(10));
 
             // return the fee
-            return EthTools.formatBalance(calculateGasInWei(Template.instance(), this.gas, this.gasPrice).toString(10), '0,0.[00000000] unit', this.unit);
+            return EthTools.formatBalance(calculateGasInWei(Template.instance(), this.gas, this.gasPrice).toString(10), '0,0.[00000000] UNIT', this.unit);
     },
     /**
     Get the correct text, if TAPi18n is available.
