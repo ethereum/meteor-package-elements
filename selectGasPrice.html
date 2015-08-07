@@ -1,6 +1,6 @@
 <template name="dapp_selectGasPrice">
     <div class="dapp-select-gas-price">
-        <span>{{fee}}</span>
+        <span>{{fee}} <span>{{unit}}</span></span>
         <br>
         <input type="range" name="fee" min="-5" max="5" step="1" value="{{TemplateVar.get 'feeMultiplicator'}}">
         <span>{{i18nText 'low'}}</span>
