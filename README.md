@@ -22,6 +22,8 @@ Additionally this package exposes the following packages:
 Note that these packages will only be exposed to your client part of your dapp,
 if you want to use e.g. `EthTools` on the server side add the package manually using `$ meteor add ethereum:tools`.
 
+***
+
 ### Identicon
 
 ![identicon](https://raw.githubusercontent.com/ethereum/meteor-package-elements/master/screenshots/identicon.png)
@@ -40,6 +42,8 @@ Additionally you can provide a URL, which the identicon will link to.
 {{> dapp_identicon identity='0x922a519ac926f69856fcfc1b2b8b846cfb3f6b4e' link="/mypath/"}}
 
 ```
+
+***
 
 ### Address Input
 
@@ -68,6 +72,8 @@ Getting the value using `TemplateVar` you can grap the templates reactive var us
 ```js
 TemplateVar.getFrom('.my-container-element .dapp-address-input', 'value');
 ```
+
+***
 
 ### Select account
 
@@ -121,6 +127,8 @@ Getting the value using `TemplateVar` you can grap the templates reactive var us
 TemplateVar.getFrom('.my-container-element .dapp-select-account', 'value');
 ```
 
+***
+
 ### Gas price selection
 
 ![select gas price](https://raw.githubusercontent.com/ethereum/meteor-package-elements/master/screenshots/selectGasPrice.png)
@@ -161,6 +169,7 @@ TemplateVar.getFrom('.my-container-element .dapp-select-gas-price', 'gasInWei');
 The element can replace the - and + texts below the range selection using the `tap:i18n` package.
 If the `TAPi18n` helper is available it will use `TAPi18n.__('elements.selectGasPrice.high')` and `TAPi18n.__('elements.selectGasPrice.low')` for the texts.
 
+***
 
 ### Modals
 
@@ -239,6 +248,7 @@ Router.current().render('dapp_modal', {
 });
 ```
 
+***
 
 ### Modal Question
 
