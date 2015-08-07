@@ -4,7 +4,7 @@ A collection of basic Meteor templates/components to make dapps faster to build.
 
 Its recommended to use these elements along with the [Ðapp styles](https://github.com/ethereum/dapp-styles).
 
-You can find a [Demo here](http://ethereum-elements.meteor.com).
+You can find a [demo here](http://ethereum-elements.meteor.com).
 
 ## Installation
 
@@ -18,7 +18,6 @@ Additionally this package exposes the following packages:
 
 - [ethereum:tools](https://atmospherejs.com/ethereum/tools), which gives you `EthTools`.
 - [frozeman:template-var](https://atmospherejs.com/frozeman/template-var), which gives you the `TemplateVar.set()/.get()` functions which can be used to get values from the select account, or address input element.
-- [frozeman:storage](https://atmospherejs.com/frozeman/storage), which gives you the `LocalStore.set()/.get()` functions (used for `dapp_formatBalance`).
 
 Note that these packages will only be exposed to your client part of your dapp,
 if you want to use e.g. `EthTools` on the server side add the package manually using `$ meteor add ethereum:tools`.
@@ -141,7 +140,7 @@ The user then can adjust the fee up and down by a factor of ~1.8.
 {{> dapp_selectGasPrice gas=21000 gasPrice=50000000000 unit="ether"}}
 ```
 
-*Note*: If you don't set the `unit` property it will use `LocalStore.get('dapp_etherUnit')`, like the `{{> dapp_formatBalance}}` element.
+*Note*: If you don't set the `unit` property it will use `EthTools.getUnit()`, like the `{{> dapp_formatBalance}}` element.
 
 **Getting values reactively**
 
@@ -162,26 +161,6 @@ TemplateVar.getFrom('.my-container-element .dapp-select-gas-price', 'gasInWei');
 The element can replace the - and + texts below the range selection using the `tap:i18n` package.
 If the `TAPi18n` helper is available it will use `TAPi18n.__('elements.selectGasPrice.high')` and `TAPi18n.__('elements.selectGasPrice.low')` for the texts.
 
-
-### Format balances
-
-![format balances](https://raw.githubusercontent.com/ethereum/meteor-package-elements/master/screenshots/formatBalance.png)
-
-To format a wei value to any ether unit, you can use the following helper:
-
-```html
-{{dapp_formatBalance "1000000133" "0,0.00[0000]" "ether"}}
-```
-
-If you leave the last value it will use `LocalStore.get('etherUnit')`, as reactive localstorage variable.
-
-```html
-{{dapp_formatBalance "1000000133" "0,0.00"}}
-```
-
-Use then `LocalStore.set('dapp_etherUnit', 'finney')` to change the unit and displayed balances.
-
-***
 
 ### Modals
 

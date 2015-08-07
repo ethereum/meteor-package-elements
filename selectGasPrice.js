@@ -32,9 +32,10 @@ Calculates the gas * gas price.
 @method calculateGasInWei
 @return {Number}
 */
-var calculateGasInWei = function(template, gas, gasPrice, unit, returnGasPrice){
+var calculateGasInWei = function(template, gas, gasPrice, returnGasPrice){
     // console.log('Estimated gas: ', gas);
-    var suggestedGasPrice = web3.fromWei(new BigNumber(String(gasPrice || defaultGasPrice), 10), unit || LocalStore.get('dapp_etherUnit'));
+    gasPrice = gasPrice || defaultGasPrice;
+    var suggestedGasPrice = new BigNumber(String(gasPrice), 10);
 
     return (returnGasPrice)
         ? suggestedGasPrice.times(new BigNumber(toPowerFactor).toPower(TemplateVar.get(template, 'feeMultiplicator')))
@@ -55,21 +56,14 @@ Template['dapp_selectGasPrice'].helpers({
     @method (fee)
     */
     'fee': function(){
-        if(_.isFinite(TemplateVar.get('feeMultiplicator')) && _.isFinite(this.gas) && _.isFinite(this.gasPrice))
+        if(_.isFinite(TemplateVar.get('feeMultiplicator')) && _.isFinite(this.gas))
+
             // set the value
-            TemplateVar.set('gasInWei', calculateGasInWei(Template.instance(), this.gas, this.gasPrice, 'wei').floor().toString(10));
-            TemplateVar.set('gasPrice', calculateGasInWei(Template.instance(), this.gas, this.gasPrice, 'wei', true).floor().toString(10));
+            TemplateVar.set('gasInWei', calculateGasInWei(Template.instance(), this.gas, this.gasPrice).floor().toString(10));
+            TemplateVar.set('gasPrice', calculateGasInWei(Template.instance(), this.gas, this.gasPrice, true).floor().toString(10));
 
             // return the fee
-            return EthTools.formatNumber(calculateGasInWei(Template.instance(), this.gas, this.gasPrice, this.unit).toString(10), '0,0.[00000000]');
-    },
-    /**
-    Get the current unit.
-
-    @method unit
-    */
-    'unit': function(){
-        return this.unit || LocalStore.get('dapp_etherUnit');
+            return EthTools.formatBalance(calculateGasInWei(Template.instance(), this.gas, this.gasPrice).toString(10), '0,0.[00000000] unit', this.unit);
     },
     /**
     Get the correct text, if TAPi18n is available.
