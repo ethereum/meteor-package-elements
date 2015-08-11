@@ -83,7 +83,9 @@ Template['dapp_addressInput'].events({
         if(web3.isAddress(value) || _.isEmpty(value)) {
             TemplateVar.set('isValid', true);
             if(!_.isEmpty(value))
-                TemplateVar.set('value', value);
+                TemplateVar.set('value', '0x'+ value.replace('0x',''));
+            else
+                TemplateVar.set('value', undefined);
         } else {
             TemplateVar.set('isValid', false);
             TemplateVar.set('value', undefined);

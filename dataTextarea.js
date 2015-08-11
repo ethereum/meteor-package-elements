@@ -60,6 +60,7 @@ Template['dapp_dataTextarea'].events({
             value = value.replace(/ +/, '');
             e.currentTarget.value = value;
         }
+        // remove multiline
         if(value.indexOf("\n") !== -1) {
             value = value.replace("\n", '');
             e.currentTarget.value = value;
@@ -74,7 +75,9 @@ Template['dapp_dataTextarea'].events({
         if(/^(0x)?[a-f0-9]*$/i.test(value) || _.isEmpty(value)) {
             TemplateVar.set('isValid', true);
             if(!_.isEmpty(value))
-                TemplateVar.set('value', value);
+                TemplateVar.set('value', '0x'+ value.replace('0x',''));
+            else
+                TemplateVar.set('value', undefined);
         } else {
             TemplateVar.set('isValid', false);
             TemplateVar.set('value', undefined);
