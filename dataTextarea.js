@@ -5,13 +5,13 @@ Template Controllers
 */
 
 /**
-The address input template, containg the identicon.
+The data textarea template.
 
-@class [template] dapp_addressInput
+@class [template] dapp_dataTextarea
 @constructor
 */
 
-Template['dapp_addressInput'].onCreated(function(){
+Template['dapp_dataTextarea'].onCreated(function(){
 
     // default set to true, to show no error
     TemplateVar.set('isValid', true);
@@ -21,26 +21,13 @@ Template['dapp_addressInput'].onCreated(function(){
     }
 });
 
-Template['dapp_addressInput'].onRendered(function(){
+Template['dapp_dataTextarea'].onRendered(function(){
     if(this.data.value) {
-        this.$('input').trigger('change');
+        this.$('textarea').trigger('change');
     }
 });
 
-Template['dapp_addressInput'].helpers({
-    /**
-    Return the to address
-
-    @method (address)
-    */
-    'address': function(){
-        var address = TemplateVar.get('value');
-
-        if(Template.instance().view.isRendered && Template.instance().find('input').value !== address)
-            Template.instance().$('input').trigger('change');
-
-        return (_.isString(address)) ? '0x'+ address.replace('0x','') : false;
-    },
+Template['dapp_dataTextarea'].helpers({
     /**
     Return the autofocus or disabled attribute.
 
@@ -59,18 +46,22 @@ Template['dapp_addressInput'].helpers({
 });
 
 
-Template['dapp_addressInput'].events({
+Template['dapp_dataTextarea'].events({
     /**
-    Set the address while typing
+    Set the value while typing
     
-    @event input input, change input
+    @event input textarea, change textarea
     */
-    'input input, change input': function(e, template){
+    'input textarea, change textarea': function(e, template){
         var value = e.currentTarget.value;
 
         // remove whitespaces
         if(value.indexOf(' ') !== -1) {
             value = value.replace(/ +/, '');
+            e.currentTarget.value = value;
+        }
+        if(value.indexOf("\n") !== -1) {
+            value = value.replace("\n", '');
             e.currentTarget.value = value;
         }
 
@@ -80,7 +71,7 @@ Template['dapp_addressInput'].events({
             e.currentTarget.value = value;
         }
 
-        if(web3.isAddress(value) || _.isEmpty(value))
+        if(/^(0x)?[a-f0-9]*$/i.test(value) || _.isEmpty(value))
             TemplateVar.set('isValid', true);
         else
             TemplateVar.set('isValid', false);
@@ -89,15 +80,5 @@ Template['dapp_addressInput'].events({
             TemplateVar.set(template, 'value', false);
         else
             TemplateVar.set(template, 'value', value);
-    },
-    /**
-    Prevent the identicon from beeing clicked.
-
-    TODO: remove?
-    
-    @event click a
-    */
-    'click a': function(e){
-        e.preventDefault();
     }
 });

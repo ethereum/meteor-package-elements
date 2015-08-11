@@ -1,7 +1,7 @@
 Package.describe({
   name: 'ethereum:elements',
   summary: 'Basic elements for Dapps',
-  version: '0.3.6',
+  version: '0.3.7',
   git: 'http://github.com/ethereum/meteor-package-elements'
 });
 
@@ -42,6 +42,9 @@ Package.onUse(function(api) {
 
   api.addFiles('addressInput.html', 'client');
   api.addFiles('addressInput.js', 'client');
+
+  api.addFiles('dataTextarea.html', 'client');
+  api.addFiles('dataTextarea.js', 'client');
 
   api.addFiles('selectAccount.html', 'client');
   api.addFiles('selectAccount.js', 'client');

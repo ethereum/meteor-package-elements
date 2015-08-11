@@ -54,7 +54,7 @@ Creates a input field, with an identicon, which will change based on the input v
 You can add the class `dapp-large` to make it a larger input.
 
 ```html
-{{> dapp_addressInput placeholder="0x000000.." value="Default Value"}}
+{{> dapp_addressInput placeholder="0x000000.." value="0x1234..."}}
 ```
 
 **Setting size**
@@ -65,15 +65,66 @@ By passing `class="dapp-large"` you can have a larger version of the input:
 {{> dapp_addressInput placeholder="0x000000.." class="dapp-large"}}
 ```
 
+Additional Properties are:
+
+- `autofocus="true"`
+- `disabled="true"`
+
 **Getting values reactively**
 
 Getting the value using `TemplateVar` you can grap the templates reactive var using:
 
 ```js
 TemplateVar.getFrom('.my-container-element .dapp-address-input', 'value');
+// 0xe5f2f0a5ff3f889856c85b3a255501d1d291467d
+
+// to get if its valid content
+TemplateVar.getFrom('.my-container-element .dapp-data-textarea', 'isValid');
+// true
 ```
 
 ***
+
+### Data Textarea
+
+![dataTextarea](https://raw.githubusercontent.com/ethereum/meteor-package-elements/master/screenshots/dataTextarea.png)
+
+Creates a textarea field, which only accepts HEX data as input.
+
+You can add the class `dapp-large` to make it a larger input.
+
+```html
+{{> dapp_dataTextarea cols="20" rows="4" value="0x1234"}}
+```
+
+**Setting size**
+
+By passing `class="dapp-large"` you can have a larger version of the input:
+
+```html
+{{> dapp_dataTextarea class="dapp-large"}}
+```
+
+Additional Properties are:
+
+- `autofocus="true"`
+- `disabled="true"`
+
+**Getting values reactively**
+
+Getting the value using `TemplateVar` you can grap the templates reactive var using:
+
+```js
+TemplateVar.getFrom('.my-container-element .dapp-data-textarea', 'value');
+// 0x1bff2
+
+// to get if its valid content
+TemplateVar.getFrom('.my-container-element .dapp-data-textarea', 'isValid');
+// true
+```
+
+***
+
 
 ### Select account
 
