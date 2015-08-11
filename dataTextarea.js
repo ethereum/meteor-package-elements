@@ -71,14 +71,13 @@ Template['dapp_dataTextarea'].events({
             e.currentTarget.value = value;
         }
 
-        if(/^(0x)?[a-f0-9]*$/i.test(value) || _.isEmpty(value))
+        if(/^(0x)?[a-f0-9]*$/i.test(value) || _.isEmpty(value)) {
             TemplateVar.set('isValid', true);
-        else
+            if(!_.isEmpty(value))
+                TemplateVar.set('value', value);
+        } else {
             TemplateVar.set('isValid', false);
-
-        if(_.isEmpty(value))
-            TemplateVar.set(template, 'value', false);
-        else
-            TemplateVar.set(template, 'value', value);
+            TemplateVar.set('value', undefined);
+        }
     }
 });

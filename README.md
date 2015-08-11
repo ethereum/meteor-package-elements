@@ -77,11 +77,9 @@ Getting the value using `TemplateVar` you can grap the templates reactive var us
 ```js
 TemplateVar.getFrom('.my-container-element .dapp-address-input', 'value');
 // 0xe5f2f0a5ff3f889856c85b3a255501d1d291467d
-
-// to get if its valid content
-TemplateVar.getFrom('.my-container-element .dapp-data-textarea', 'isValid');
-// true
 ```
+
+**Note** The `value` won't be set until the content of the input is valid.
 
 ***
 
@@ -117,11 +115,9 @@ Getting the value using `TemplateVar` you can grap the templates reactive var us
 ```js
 TemplateVar.getFrom('.my-container-element .dapp-data-textarea', 'value');
 // 0x1bff2
-
-// to get if its valid content
-TemplateVar.getFrom('.my-container-element .dapp-data-textarea', 'isValid');
-// true
 ```
+
+**Note** The `value` won't be set until the content of the textarea is valid.
 
 ***
 
