@@ -1,9 +1,15 @@
+<template name="dapp_modalPlaceholder">
+    {{#if modalTemplate}}
+        {{> Template.dynamic template=modalTemplate data=modalData}}
+    {{/if}}
+</template>
+
 <template name="dapp_modal">
     {{#Animate}}
         <div class="dapp-modal-overlay animate">
-            <section class="dapp-modal-container">
-                {{#if yield}}
-                    {{> yield region="modalContent"}}
+            <section class="dapp-modal-container {{class}}">
+                {{#if template}}
+                    {{> Template.dynamic template=template data=data}}
                 {{/if}}
             </section>
         </div>

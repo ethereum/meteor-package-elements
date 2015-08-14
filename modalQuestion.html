@@ -1,5 +1,9 @@
 <template name="dapp_modal_question">
-    <p>{{text}}</p>
+    {{#if template}}
+        {{> Template.dynamic template=template data=data}}
+    {{else}}
+        <p>{{text}}</p>
+    {{/if}}
     <div class="dapp-modal-buttons">
         {{#if hasCancel}}
             <button class="cancel">{{i18nText 'cancel'}}</button>

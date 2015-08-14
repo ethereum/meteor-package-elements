@@ -62,25 +62,25 @@ Template['dapp_modal_question'].events({
     /**
     When the confirm button is clicked, execute the given ok() function.
 
-    @event click  button.ok
+    @event click .dapp-modal-buttons button.ok
     */
-    'click button.ok': function(e){
+    'click .dapp-modal-buttons button.ok': function(e){
         if(_.isFunction(this.ok))
             this.ok();
 
         // hide the modal
-        Router.current().render(null, {to: 'modal'});
+        EthElements.Modal.hide();
     },
     /**
     When the confirm button is clicked, execute the given cancel() function.
 
-    @event click  button.cancel
+    @event click .dapp-modal-buttons button.cancel
     */
-    'click button.cancel': function(e){
+    'click .dapp-modal-buttons button.cancel': function(e){
         if(_.isFunction(this.cancel))
             this.cancel();
 
         // hide the modal
-        Router.current().render(null, {to: 'modal'});
+        EthElements.Modal.hide();
     }
 });

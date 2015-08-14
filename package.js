@@ -1,7 +1,7 @@
 Package.describe({
   name: 'ethereum:elements',
   summary: 'Basic elements for Dapps',
-  version: '0.3.9',
+  version: '0.4.0',
   git: 'http://github.com/ethereum/meteor-package-elements'
 });
 
@@ -10,6 +10,7 @@ Package.onUse(function(api) {
   api.use('underscore', 'client');
   api.use('jquery', 'client');
   api.use('templating', 'client');
+  api.use('reactive-var', 'client');
   api.use('less', 'client');
 
 
@@ -26,7 +27,7 @@ Package.onUse(function(api) {
   api.imply('frozeman:template-var@1.1.1', 'client');
 
 
-  api.export(['web3'], 'client'); // we need to expose web3.js, so that the app, can re-use this one, instead of having two instances
+  api.export(['EthElements','web3'], 'client'); // we need to expose web3.js, so that the app, can re-use this one, instead of having two instances
 
 
   api.addFiles('icons/Simple-Line-Icons.svg', 'client');
@@ -36,6 +37,8 @@ Package.onUse(function(api) {
   api.addFiles('icons/simple-line-icons.css', 'client');
 
   api.addFiles('main.less', 'client');
+
+  api.addFiles('ethelements.js', 'client');
 
   api.addFiles('identicon.html', 'client');
   api.addFiles('identicon.js', 'client');

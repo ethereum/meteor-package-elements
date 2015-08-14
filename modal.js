@@ -4,6 +4,40 @@ Template Controllers
 @module Templates
 */
 
+
+/**
+The modal placeholder template.
+
+@class [template] dapp_modalPlaceholder
+@constructor
+*/
+
+Template['dapp_modalPlaceholder'].onCreated(function(){
+});
+
+
+Template['dapp_modalPlaceholder'].helpers({
+    /**
+    The modal template, set manualy
+
+    @method (modalTemplate)
+    */
+    'modalTemplate': function(){
+        return (EthElements.Modal._current.get())
+            ? 'dapp_modal' : false;
+    },
+    /**
+    The modal templates data, set manualy
+
+    @method (modalData)
+    */
+    'modalData': function(){
+        return EthElements.Modal._current.get();
+    }
+});
+
+
+
 /**
 The modal wrapper template.
 If you pass "closePath" in the data context, it will use this path, when the modal overlay is clicked.
@@ -44,17 +78,13 @@ Template['dapp_modal'].events({
     @event click .dapp-modal-overlay
     */
     'click .dapp-modal-overlay': function(e, template){
-
         // hide the modal
-        if($(e.target).hasClass('dapp-modal-overlay') && this.closeable !== false) {
+        if($(e.target).hasClass('dapp-modal-overlay') && template.data.closeable !== false) {
 
-            if(typeof Router !== 'undefined') {
-
-                if(this.closePath)
-                    Router.go(this.closePath);
-                else
-                    Router.current().render(null, {to: 'modal'});
-            }
+            if(template.data.closePath && typeof Router !== 'undefined')
+                Router.go(template.data.closePath);
+            else
+                EthElements.Modal.hide();
         }
     }
 });

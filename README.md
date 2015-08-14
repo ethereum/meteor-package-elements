@@ -222,77 +222,52 @@ If the `TAPi18n` helper is available it will use `TAPi18n.__('elements.selectGas
 
 ![modal](https://raw.githubusercontent.com/ethereum/meteor-package-elements/master/screenshots/modal.png)
 
-**Note** you need the `iron:router` package for this element.
-
-Just place a modal region before the closing body tag.
+Just place a modal placeholder before the closing body tag.
 
 ```html
-{{> yield region="modal"}}
+{{> dapp_modalPlaceholder}}
 ```
 
-## Render as route
+#### Render without route
 
-Then you can render the modal and its content inside using a route as follows:
-
-```js
-Router.route('/myRoute', function () {
-    this.render();
-    this.render('dapp_modal', {
-        to: 'modal',
-        data: {
-            closePath: '/dashboard' // this property can be set if you want to determine where to go when the modal overlay is clicked.
-        }
-    });
-    this.render('myContentTemplate', {
-        to: 'modalContent',
-        data: function(){
-            return MyCollection.findOne();
-        }
-    });
-},{
-    name: 'myRoute'
-});
-```
-
-## Render without route
-
-You can also render the modal without a route:
+Render the modal:
 
 ```js
-Router.current().render('dapp_modal', {to: 'modal'});
-Router.current().render('myContentTemplate', {
-    to: 'modalContent',
+EthElements.Modal.show('myContentTemplate');
+
+// Or
+
+EthElements.Modal.show({
+    template: 'myContentTemplate',
     data: {
         myData: 'some data'
     }
 });
 ```
 
-## Close modal
+Additional options:
 
-To remove the modal in another route call the following in the `onBeforeAction` hook e.g.:
+- `closeable` - Prevents the default behaviour, which closes the modal when the overlay is clicked.
+- `class` - A class, which will be add to the modal section element
 
 ```js
-Router.route('/anotherRoute', function () {
-    this.render(null, {to: 'modal'});
-    this.next();
+EthElements.Modal.show('myContentTemplate', {
+    closeable: false
+    class: 'my-modal-class'
 });
 ```
 
-To close it programatically call `Router.current().render(null, {to: 'modal'});`.
-
-
-## Prevent modal closing when the overlay is clicked
-
-You can pass the `closable = false` property to the data context of the modal, to prevent it from beeing closed when the overlay is clicked.
+Navigate to a path on close.  
+This will only work when the [iron:router](https://atmospherejs.com/iron/router) package is installed:
 
 ```js
-Router.current().render('dapp_modal', {
-    to: 'modal',
-    data: {
-        closable: false
-    }
-});
+EthElements.Modal.show('myContentTemplate', {closePath: '/dashboard'});
+```
+
+#### Close modal
+
+```js
+EthElements.Modal.hide();
 ```
 
 ***
@@ -301,29 +276,63 @@ Router.current().render('dapp_modal', {
 
 ![modal_question](https://raw.githubusercontent.com/ethereum/meteor-package-elements/master/screenshots/modal_question.png)
 
-**Note** you need the `iron:router` package for this element.
-
 The question modal is a modal content template, which can be used to display a text and allow OK and Cancel options.
 
 You basically just can pass a `text`, `ok` and/or `cancel` property as a data context to set callbacks, which will be fired when the button is pressed.
-If you set the `ok` or `cancel` property to `true`, it will just close the modal without any action. If you pass `false` or leave the `ok` or `cancel` property, it won't show that button.
+
+Additional you can:
+- Set the `ok` or `cancel` property to `true`, it will just close the modal without any action.  
+- Pass `false` or leave the `ok` or `cancel` property empty and it won't show that buttons.
 
 ```js
-Router.current().render('dapp_modal', {to: 'modal'});
-Router.current().render('dapp_modal_question', {
-    to: 'modalContent',
+EthElements.Modal.question({
+    text: 'Do you want to ...',
+    ok: function(){
+        // do something on ok
+    },
+    cancel: true // simply show th cancel button and close the modal on click
+});
+```
+
+#### Using a template
+
+Instead of passing a text you can also pass a template, which will be shown above the ok/cancel buttons
+
+```js
+EthElements.Modal.question({
+    template: 'myTemplate',
     data: {
-        text: 'Do you want to ...',
-        
-        ok: function(){
-            // do something on ok
-        },
-        cancel: true // simply show th cancel button and close the modal on click
+        my: 'template data'
+    },
+    ok: function(){
+        // do something on ok
+    },
+    cancel: function(){
+        // do something on cancel
     }
 });
 ```
 
-**Localization**
+#### Close question modal
+
+```js
+EthElements.Modal.hide();
+```
+
+Additional you can pass the same options as the modal as the second parameter:
+
+```js
+EthElements.Modal.question({
+    text: 'Alright?',
+    ok: function(){
+        // do something on ok
+    }
+}, {
+    closeable: false
+});
+```
+
+#### Localization
 
 The modal question can use the `tap:i18n` package for the ok and cancel button texts.
 If the `TAPi18n` helper is available it will use `TAPi18n.__('buttons.ok')` and `TAPi18n.__('buttons.cancel')` for the buttons.
