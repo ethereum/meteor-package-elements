@@ -178,7 +178,7 @@ TemplateVar.getFrom('.my-container-element .dapp-select-account', 'value');
 
 ### Gas price selection
 
-![select gas price](https://raw.githubusercontent.com/ethereum/meteor-package-elements/master/screenshots/selectGasPrice.png)
+![select gas price](https://raw.githubusercontent.com/ethereum/meteor-package-elements/master/screenshots/selectGasPrice.png?1)
 
 
 This element allows you users to adjust the fee (gas * gas price) of a transaction, and gives you back either the `gasInWei` or the selected `gasPrice`.
@@ -220,7 +220,7 @@ If the `TAPi18n` helper is available it will use `TAPi18n.__('elements.selectGas
 
 ### Modals
 
-![modal](https://raw.githubusercontent.com/ethereum/meteor-package-elements/master/screenshots/modal.png?1)
+![modal](https://raw.githubusercontent.com/ethereum/meteor-package-elements/master/screenshots/modal.png?2)
 
 Just place a modal placeholder before the closing body tag.
 
@@ -274,7 +274,7 @@ EthElements.Modal.hide();
 
 ### Modal Question
 
-![modal_question](https://raw.githubusercontent.com/ethereum/meteor-package-elements/master/screenshots/modal_question.png?1)
+![modal_question](https://raw.githubusercontent.com/ethereum/meteor-package-elements/master/screenshots/modal_question.png?2)
 
 The question modal is a modal content template, which can be used to display a text and allow OK and Cancel options.
 
