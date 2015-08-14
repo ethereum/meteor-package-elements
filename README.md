@@ -220,7 +220,7 @@ If the `TAPi18n` helper is available it will use `TAPi18n.__('elements.selectGas
 
 ### Modals
 
-![modal](https://raw.githubusercontent.com/ethereum/meteor-package-elements/master/screenshots/modal.png)
+![modal](https://raw.githubusercontent.com/ethereum/meteor-package-elements/master/screenshots/modal.png?1)
 
 Just place a modal placeholder before the closing body tag.
 
@@ -274,7 +274,7 @@ EthElements.Modal.hide();
 
 ### Modal Question
 
-![modal_question](https://raw.githubusercontent.com/ethereum/meteor-package-elements/master/screenshots/modal_question.png)
+![modal_question](https://raw.githubusercontent.com/ethereum/meteor-package-elements/master/screenshots/modal_question.png?1)
 
 The question modal is a modal content template, which can be used to display a text and allow OK and Cancel options.
 
