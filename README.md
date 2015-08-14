@@ -252,7 +252,7 @@ Additional options:
 
 ```js
 EthElements.Modal.show('myContentTemplate', {
-    closeable: false
+    closeable: false,
     class: 'my-modal-class'
 });
 ```
