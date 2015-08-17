@@ -65,11 +65,12 @@ Template['dapp_modal_question'].events({
     @event click .dapp-modal-buttons button.ok
     */
     'click .dapp-modal-buttons button.ok': function(e){
+        // hide the modal
+        EthElements.Modal.hide();
+
         if(_.isFunction(this.ok))
             this.ok();
 
-        // hide the modal
-        EthElements.Modal.hide();
     },
     /**
     When the confirm button is clicked, execute the given cancel() function.
@@ -77,10 +78,10 @@ Template['dapp_modal_question'].events({
     @event click .dapp-modal-buttons button.cancel
     */
     'click .dapp-modal-buttons button.cancel': function(e){
-        if(_.isFunction(this.cancel))
-            this.cancel();
-
         // hide the modal
         EthElements.Modal.hide();
+
+        if(_.isFunction(this.cancel))
+            this.cancel();
     }
 });
