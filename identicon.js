@@ -20,22 +20,13 @@ var cache = {};
 
 Template['dapp_identicon'].helpers({
     /**
-    Return the route name and route parameter
-
-    @method route
+    Make sure the identity is lowercased
+    
+    @method (identity)
     */
-//     'route': function(){
-//         if(!this.route)
-//             return;
-
-//         var returnValue = {
-//             route: this.route,
-//         };
-
-//         returnValue[this.routeParam || 'identity'] = this.identity;
-// console.log(returnValue);
-//         return returnValue;
-//     }
+    'identity': function(identity){
+        return (_.isString(this.identity)) ? this.identity.toLowerCase() : this.identity;
+    },
     /**
     Return the cached or generated identicon
     
