@@ -1,7 +1,7 @@
 Package.describe({
   name: 'ethereum:elements',
   summary: 'Basic elements for Dapps',
-  version: '0.4.4',
+  version: '0.4.5',
   git: 'http://github.com/ethereum/meteor-package-elements'
 });
 
@@ -18,7 +18,7 @@ Package.onUse(function(api) {
   api.use('3stack:bignumber@2.0.0', 'client');
   // api.use('underscorestring:underscore.string@3.1.1', 'client');
 
-  api.use('ethereum:web3@0.9.0', 'client');
+  api.use('ethereum:web3@0.12.2', 'client');
   api.use('ethereum:tools@0.2.0', 'client');
   api.imply('ethereum:tools@0.2.0', 'client');
   api.use('frozeman:animation-helper@0.2.5', 'client');
@@ -27,7 +27,7 @@ Package.onUse(function(api) {
   api.imply('frozeman:template-var@1.1.1', 'client');
 
 
-  api.export(['EthElements','web3'], 'client'); // we need to expose web3.js, so that the app, can re-use this one, instead of having two instances
+  api.export(['EthElements'], 'client');
 
 
   api.addFiles('icons/Simple-Line-Icons.svg', 'client');
