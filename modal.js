@@ -81,9 +81,12 @@ Template['dapp_modal'].events({
         // hide the modal
         if($(e.target).hasClass('dapp-modal-overlay') && template.data.closeable !== false) {
 
-            if(template.data.closePath && typeof Router !== 'undefined')
-                Router.go(template.data.closePath);
-            else
+            if(template.data.closePath && typeof Router !== 'undefined') {
+                if(typeof Router !== 'undefined')
+                    Router.go(template.data.closePath);
+                if(typeof FlowRouter !== 'undefined')
+                    FlowRouter.go(template.data.closePath);
+            } else
                 EthElements.Modal.hide();
         }
     }

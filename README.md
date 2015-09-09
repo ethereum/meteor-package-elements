@@ -258,7 +258,7 @@ EthElements.Modal.show('myContentTemplate', {
 ```
 
 Navigate to a path on close.  
-This will only work when the [iron:router](https://atmospherejs.com/iron/router) package is installed:
+This will only work when the [kadira:flow-router](https://atmospherejs.com/kadira/flow-router) or [iron:router](https://atmospherejs.com/iron/router) package is installed:
 
 ```js
 EthElements.Modal.show('myContentTemplate', {closePath: '/dashboard'});
