@@ -1,12 +1,12 @@
 Package.describe({
   name: 'ethereum:elements',
   summary: 'Basic elements for Dapps',
-  version: '0.4.6',
+  version: '0.5.0',
   git: 'http://github.com/ethereum/meteor-package-elements'
 });
 
 Package.onUse(function(api) {
-  api.versionsFrom('1.0');
+  api.versionsFrom('1.2');
   api.use('underscore', 'client');
   api.use('jquery', 'client');
   api.use('templating', 'client');
@@ -30,11 +30,11 @@ Package.onUse(function(api) {
   api.export(['EthElements'], 'client');
 
 
-  api.addFiles('icons/Simple-Line-Icons.svg', 'client');
-  api.addFiles('icons/Simple-Line-Icons.ttf', 'client');
-  api.addFiles('icons/Simple-Line-Icons.woff', 'client');
-  api.addFiles('icons/Simple-Line-Icons.eot', 'client');
-  api.addFiles('icons/simple-line-icons.css', 'client');
+  api.addAssets('icons/Simple-Line-Icons.svg', 'client');
+  api.addAssets('icons/Simple-Line-Icons.ttf', 'client');
+  api.addAssets('icons/Simple-Line-Icons.woff', 'client');
+  api.addAssets('icons/Simple-Line-Icons.eot', 'client');
+  api.addAssets('icons/simple-line-icons.css', 'client');
 
   api.addFiles('main.less', 'client');
 
