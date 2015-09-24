@@ -1,7 +1,7 @@
 Package.describe({
   name: 'ethereum:elements',
   summary: 'Basic elements for Dapps',
-  version: '0.5.0',
+  version: '0.5.1',
   git: 'http://github.com/ethereum/meteor-package-elements'
 });
 
@@ -12,6 +12,7 @@ Package.onUse(function(api) {
   api.use('templating', 'client');
   api.use('reactive-var', 'client');
   api.use('less', 'client');
+  api.use('standard-minifiers', 'client');
 
 
   api.use('mistereo:identicon@1.0.0', 'client');
@@ -36,6 +37,9 @@ Package.onUse(function(api) {
   api.addAssets('icons/Simple-Line-Icons.eot', 'client');
   api.addAssets('icons/simple-line-icons.css', 'client');
 
+  api.addFiles('lib/lesshat.import.less', 'client');
+  api.addFiles('containers.import.less', 'client');
+  api.addFiles('elements.import.less', 'client');
   api.addFiles('main.less', 'client');
 
   api.addFiles('ethelements.js', 'client');
