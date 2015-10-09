@@ -42,8 +42,7 @@ Template['dapp_identicon'].helpers({
         return cache['ID_'+ identity] || (cache['ID_'+ identity] =  blockies.create({
             seed: identity,
             size: 8,
-            scale: 8,
-            bgcolor: '#eee'
+            scale: 8
         }).toDataURL());
     }
 });
