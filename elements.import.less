@@ -126,18 +126,22 @@ input[type="range"] {
     background-size: cover;
     background-positon: 50% 50%;
     box-shadow: inset rgba(255,255,255,0.2) 0 2px 2px, inset rgba(0,0,0,0.3) 0 -1px 8px;
+    box-shadow: inset rgba(255, 255, 255, 0.4) 0 4px 8px, inset rgba(0, 0, 0, 0.6) 0 -4px 12px;
 
     &.dapp-tiny {
         width: floor(@gridWidth / 1.5);
         height: floor(@gridWidth / 1.5);
+        box-shadow: inset rgba(255, 255, 255, 0.4) 0 1px 1px, inset rgba(0, 0, 0, 0.3) 0 -1px 2px;
     }
     &.dapp-small {
         width: @gridWidth;
         height: @gridWidth;
+        box-shadow: inset rgba(255, 255, 255, 0.4) 0 2px 2px, inset rgba(0, 0, 0, 0.4) 0 -2px 4px;
     }
     &.dapp-medium {
         width: floor(@gridWidth * 1.5);
         height: floor(@gridWidth * 1.5);
+        box-shadow: inset rgba(255, 255, 255, 0.4) 0 4px 4px, inset rgba(0, 0, 0, 0.5) 0 -4px 6px;
     }
 }
 
