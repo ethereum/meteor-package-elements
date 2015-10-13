@@ -15,7 +15,7 @@ Package.onUse(function(api) {
   api.use('standard-minifiers', 'client');
 
 
-  api.use('mistereo:identicon@1.0.0', 'client');
+  api.use('alexvandesande:identicon@1.0.2', 'client');
   api.use('3stack:bignumber@2.0.0', 'client');
   // api.use('underscorestring:underscore.string@3.1.1', 'client');
 
