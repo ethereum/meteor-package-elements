@@ -2,9 +2,9 @@
     <div class="dapp-select-account">
         <select name="dapp-select-account" class="{{class}}">
             {{#each accounts}}
-                <option value="{{address}}">{{#if isAccount}}🔑{{/if}} {{name}} ({{dapp_formatBalance balance "0,0.00"}})</option>
+                <option value="{{address}}" {{selected}}>{{#if isAccount}}🔑{{/if}} {{name}} ({{dapp_formatBalance balance "0,0.00"}})</option>
             {{/each}}
         </select>
-        {{> dapp_identicon identity=selectedAccount class="dapp-small"}}
+        {{> dapp_identicon identity=(TemplateVar.get "value") class="dapp-small"}}
     </div>
 </template>

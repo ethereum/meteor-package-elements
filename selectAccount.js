@@ -28,13 +28,15 @@ Template['dapp_selectAccount'].helpers({
         return this.type === 'account' && Template.parentData(1).showAccountTypes;
     },
     /**
-    Return the selected address
+    Return the selected attribute if its selected
 
-    @method (selectedAccount)
+    @method (selected)
     */
-    'selectedAccount': function(){
-        return TemplateVar.get('value');
-    },
+    'selected': function(){
+        return (TemplateVar.get('value') === this.address)
+            ? {selected: true}
+            : {};
+    }
 });
 
 Template['dapp_selectAccount'].events({
