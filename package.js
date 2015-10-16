@@ -1,7 +1,7 @@
 Package.describe({
   name: 'ethereum:elements',
   summary: 'Basic elements for Dapps',
-  version: '0.5.5',
+  version: '0.5.6',
   git: 'http://github.com/ethereum/meteor-package-elements'
 });
 
@@ -30,6 +30,8 @@ Package.onUse(function(api) {
 
   api.export(['EthElements'], 'client');
 
+
+  api.addAssets('identicon-load.gif', 'client');
 
   api.addFiles('lib/lesshat.import.less', 'client');
   api.addFiles('containers.import.less', 'client');
