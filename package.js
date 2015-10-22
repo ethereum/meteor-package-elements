@@ -1,20 +1,21 @@
 Package.describe({
   name: 'ethereum:elements',
   summary: 'Basic elements for Dapps',
-  version: '0.4.6',
+  version: '0.5.6',
   git: 'http://github.com/ethereum/meteor-package-elements'
 });
 
 Package.onUse(function(api) {
-  api.versionsFrom('1.0');
+  api.versionsFrom('1.2');
   api.use('underscore', 'client');
   api.use('jquery', 'client');
   api.use('templating', 'client');
   api.use('reactive-var', 'client');
   api.use('less', 'client');
+  api.use('standard-minifiers', 'client');
 
 
-  api.use('mistereo:identicon@1.0.0', 'client');
+  api.use('alexvandesande:identicon@1.0.2', 'client');
   api.use('3stack:bignumber@2.0.0', 'client');
   // api.use('underscorestring:underscore.string@3.1.1', 'client');
 
@@ -30,12 +31,11 @@ Package.onUse(function(api) {
   api.export(['EthElements'], 'client');
 
 
-  api.addFiles('icons/Simple-Line-Icons.svg', 'client');
-  api.addFiles('icons/Simple-Line-Icons.ttf', 'client');
-  api.addFiles('icons/Simple-Line-Icons.woff', 'client');
-  api.addFiles('icons/Simple-Line-Icons.eot', 'client');
-  api.addFiles('icons/simple-line-icons.css', 'client');
+  api.addAssets('identicon-load.gif', 'client');
 
+  api.addFiles('lib/lesshat.import.less', 'client');
+  api.addFiles('containers.import.less', 'client');
+  api.addFiles('elements.import.less', 'client');
   api.addFiles('main.less', 'client');
 
   api.addFiles('ethelements.js', 'client');
