@@ -39,17 +39,8 @@ Template['dapp_identicon'].helpers({
             delete cache[Object.keys(cache)[0]];
         }
 
-        var hexToBytes = function (hex){
-            //increase the variance of the seed by converting it to bytes
-            bytes = [];
-            for(var i=0; i< hex.length-1; i+=2){
-                bytes.push(parseInt(hex.substr(i, 2), 16));
-            }
-            return String.fromCharCode.apply(String, bytes);
-        }
-
         return cache['ID_'+ identity] || (cache['ID_'+ identity] =  blockies.create({
-            seed: hexToBytes(identity),
+            seed: identity,
             size: 8,
             scale: 8
         }).toDataURL());
