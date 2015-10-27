@@ -37,6 +37,11 @@ var calculateGasInWei = function(template, gas, gasPrice, returnGasPrice){
     gasPrice = gasPrice || defaultGasPrice;
     var suggestedGasPrice = new BigNumber(String(gasPrice), 10);
 
+    if(_.isUndefined(gas)) {
+        console.warn('No gas provided for {{> dapp_selectGasPrice}}');
+        return new BigNumber(0);
+    }
+
     return (returnGasPrice)
         ? suggestedGasPrice.times(new BigNumber(toPowerFactor).toPower(TemplateVar.get(template, 'feeMultiplicator')))
         : suggestedGasPrice.times(gas).times(new BigNumber(toPowerFactor).toPower(TemplateVar.get(template, 'feeMultiplicator')));
