@@ -1,7 +1,7 @@
 Package.describe({
   name: 'ethereum:elements',
   summary: 'Basic elements for Dapps',
-  version: '0.5.9',
+  version: '0.5.92',
   git: 'http://github.com/ethereum/meteor-package-elements'
 });
 
@@ -13,7 +13,6 @@ Package.onUse(function(api) {
   api.use('reactive-var', 'client');
   api.use('less', 'client');
   api.use('standard-minifiers', 'client');
-
 
   api.use('alexvandesande:identicon@2.0.2', 'client');
   api.use('3stack:bignumber@2.0.0', 'client');
