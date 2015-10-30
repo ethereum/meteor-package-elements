@@ -51,9 +51,9 @@ Template['dapp_selectAccount'].events({
     /**
     Set the selected address.
     
-    @event change select[name="dapp-select-account"]
+    @event change select
     */
-    'change select[name="dapp-select-account"]': function(e){
+    'change select': function(e){
         TemplateVar.set('value', e.currentTarget.value);
     }
 });

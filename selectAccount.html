@@ -1,6 +1,6 @@
 <template name="dapp_selectAccount">
     <div class="dapp-select-account">
-        <select name="dapp-select-account" class="{{class}}">
+        <select name="{{#if name}}{{name}}{{else}}dapp-select-account{{/if}}" class="{{class}}">
             {{#each accounts}}
                 <option value="{{address}}" {{selected}}>
                     {{#if isAccount}}🔑{{/if}} {{name}}
