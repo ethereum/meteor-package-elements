@@ -16,13 +16,13 @@ Template['dapp_dataTextarea'].onCreated(function(){
     // default set to true, to show no error
     TemplateVar.set('isValid', true);
 
-    if(this.data.value) {
+    if(this.data && this.data.value) {
         TemplateVar.set('value', this.data.value);
     }
 });
 
 Template['dapp_dataTextarea'].onRendered(function(){
-    if(this.data.value) {
+    if(this.data && this.data.value) {
         this.$('textarea').trigger('change');
     }
 });
