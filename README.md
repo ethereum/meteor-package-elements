@@ -77,6 +77,11 @@ Getting the value using `TemplateVar` you can grap the templates reactive var us
 ```js
 TemplateVar.getFrom('.my-container-element .dapp-address-input', 'value');
 // 0xe5f2f0a5ff3f889856c85b3a255501d1d291467d
+
+// or when used in an event
+'change .dapp-address-input input': function(e) {
+    var value = TemplateVar.getFrom(e.currentTarget, 'value');
+}
 ```
 
 **Note** The `value` won't be set until the content of the input is valid.
@@ -115,6 +120,11 @@ Getting the value using `TemplateVar` you can grap the templates reactive var us
 ```js
 TemplateVar.getFrom('.my-container-element .dapp-data-textarea', 'value');
 // 0x1bff2
+
+// or when used in an event
+'change textarea.dapp-data-textarea': function(e) {
+    var value = TemplateVar.getFrom(e.currentTarget, 'value');
+}
 ```
 
 **Note** The `value` won't be set until the content of the textarea is valid.
@@ -172,6 +182,11 @@ Getting the value using `TemplateVar` you can grap the templates reactive var us
 
 ```js
 TemplateVar.getFrom('.my-container-element .dapp-select-account', 'value');
+
+// or when used in an event
+'change .dapp-select-account select': function(e) {
+    var value = TemplateVar.getFrom(e.currentTarget, 'value');
+}
 ```
 
 ***
@@ -209,6 +224,11 @@ TemplateVar.getFrom('.my-container-element .dapp-select-gas-price', 'gasPrice');
 
 TemplateVar.getFrom('.my-container-element .dapp-select-gas-price', 'gasInWei');
 // "1181427240063000" which is "0.001181427240063" ether
+
+// or when used in an event
+'change .dapp-select-gas-price input': function(e) {
+    var value = TemplateVar.getFrom(e.currentTarget, 'gasInWei');
+}
 ```
 
 **Localization**
