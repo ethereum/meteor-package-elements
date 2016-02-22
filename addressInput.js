@@ -18,6 +18,7 @@ Template['dapp_addressInput'].onCreated(function(){
 
     if(this.data && this.data.value) {
         TemplateVar.set('value', this.data.value);
+        console.log('value: ', this.data.value);
     }
 });
 
@@ -55,6 +56,18 @@ Template['dapp_addressInput'].helpers({
             attr.disabled = true;
 
         return attr;
+    },
+    /**
+    Get the correct text, if TAPi18n is available.
+
+    @method i18nText
+    */
+    'i18nText': function(){
+        if(typeof TAPi18n === 'undefined') {
+            return "Double check for typos before sending";
+        } else {
+            return TAPi18n.__('elements.checksumAlert');
+        }
     }
 });
 
@@ -82,10 +95,14 @@ Template['dapp_addressInput'].events({
 
         if(web3.isAddress(value) || _.isEmpty(value)) {
             TemplateVar.set('isValid', true);
-            if(!_.isEmpty(value))
+            if(!_.isEmpty(value)) {
                 TemplateVar.set('value', '0x'+ value.replace('0x',''));
-            else
+                TemplateVar.set('isChecksum', web3.isChecksumAddress(value));
+            } else {
                 TemplateVar.set('value', undefined);
+                TemplateVar.set('isChecksum', true);                
+            }
+
         } else {
             TemplateVar.set('isValid', false);
             TemplateVar.set('value', undefined);
