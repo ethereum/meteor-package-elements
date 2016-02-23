@@ -15,6 +15,7 @@ Template['dapp_addressInput'].onCreated(function(){
 
     // default set to true, to show no error
     TemplateVar.set('isValid', true);
+    TemplateVar.set('isChecksum', true); 
 
     if(this.data && this.data.value) {
         TemplateVar.set('value', this.data.value);
@@ -95,6 +96,7 @@ Template['dapp_addressInput'].events({
 
         if(web3.isAddress(value) || _.isEmpty(value)) {
             TemplateVar.set('isValid', true);
+
             if(!_.isEmpty(value)) {
                 TemplateVar.set('value', '0x'+ value.replace('0x',''));
                 TemplateVar.set('isChecksum', web3.isChecksumAddress(value));
