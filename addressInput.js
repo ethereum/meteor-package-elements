@@ -64,8 +64,8 @@ Template['dapp_addressInput'].helpers({
     @method i18nText
     */
     'i18nText': function(){
-        if(typeof TAPi18n === 'undefined') {
-            return "Double check for typos before sending";
+        if(typeof TAPi18n === 'undefined' || TAPi18n.__('elements.checksumAlert') == 'elements.checksumAlert') {
+            return "This address looks valid, but it doesn't have some security features that will protect you against typos, so double check you have the right one. If provided, check if the security icon  matches.";
         } else {
             return TAPi18n.__('elements.checksumAlert');
         }

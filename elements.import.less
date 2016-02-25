@@ -130,7 +130,8 @@ input[type="range"] {
     background-positon: 50% 50%;
     box-shadow: inset rgba(255,255,255,0.2) 0 2px 2px, inset rgba(0,0,0,0.3) 0 -1px 8px;
     box-shadow: inset rgba(255, 255, 255, 0.4) 0 4px 8px, inset rgba(0, 0, 0, 0.6) 0 -4px 12px;
-
+    cursor: help;
+    
     &.dapp-tiny {
         width: floor(@gridWidth / 1.5);
         height: floor(@gridWidth / 1.5);
@@ -284,6 +285,7 @@ input[type="range"] {
 
     .dapp-non-checksum {
         background-color: lighten(@colorYellow, 30%);
+        cursor: help;
     }
 
     .dapp-address-label {

@@ -1,9 +1,9 @@
 <template name="dapp_identicon">
     {{#if identity}}
         {{#if link}}
-            <a href="{{link}}" class="dapp-identicon {{class}}" style="background-image: url('{{identiconData identity}}')"></a>
+            <a href="{{link}}" class="dapp-identicon {{class}}" style="background-image: url('{{identiconData identity}}')" title={{i18nTextIcon}}></a>
         {{else}}
-            <span class="dapp-identicon {{class}}" style="background-image: url('{{identiconData identity}}')"></span>
+            <span class="dapp-identicon {{class}}" style="background-image: url('{{identiconData identity}}')" title={{i18nTextIcon}}></span>
         {{/if}}
     {{/if}}
 </template>
