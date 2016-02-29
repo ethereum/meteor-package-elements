@@ -44,5 +44,17 @@ Template['dapp_identicon'].helpers({
             size: 8,
             scale: 8
         }).toDataURL());
+    },
+    /**
+    Get the correct text, if TAPi18n is available.
+
+    @method i18nText
+    */
+    'i18nTextIcon': function(){
+        if(typeof TAPi18n === 'undefined' || TAPi18n.__('elements.identiconHelper') == 'elements.identiconHelper') {
+            return "This is a security icon, if there's any change on the address the resulting icon should be a completelly different one";
+        } else {
+            return TAPi18n.__('elements.identiconHelper');
+        }
     }
 });

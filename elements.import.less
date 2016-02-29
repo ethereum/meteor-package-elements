@@ -1,3 +1,6 @@
+@colorYellow: #ffc107;
+
+
 // MIXINS
 .dapp-overflow {
     overflow-y: auto;
@@ -127,7 +130,8 @@ input[type="range"] {
     background-positon: 50% 50%;
     box-shadow: inset rgba(255,255,255,0.2) 0 2px 2px, inset rgba(0,0,0,0.3) 0 -1px 8px;
     box-shadow: inset rgba(255, 255, 255, 0.4) 0 4px 8px, inset rgba(0, 0, 0, 0.6) 0 -4px 12px;
-
+    cursor: help;
+    
     &.dapp-tiny {
         width: floor(@gridWidth / 1.5);
         height: floor(@gridWidth / 1.5);
@@ -277,5 +281,22 @@ input[type="range"] {
         left: 13px;
         font-size: 1.4em;        
         color: @colorError;
+    }
+
+    .dapp-non-checksum {
+        background-color: lighten(@colorYellow, 30%);
+        cursor: help;
+    }
+
+    .dapp-address-label {
+        position: absolute;
+        bottom: @gridHeight * -1;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 70%;
+        font-weight: 600;
+        text-transform: uppercase;
+        opacity: 0.6;
     }
 }
