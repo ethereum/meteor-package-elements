@@ -43,8 +43,8 @@ var calculateGasInWei = function(template, gas, gasPrice, returnGasPrice){
     }
 
     return (returnGasPrice)
-        ? suggestedGasPrice.times(new BigNumber(toPowerFactor).toPower(TemplateVar.get(template, 'feeMultiplicator')))
-        : suggestedGasPrice.times(gas).times(new BigNumber(toPowerFactor).toPower(TemplateVar.get(template, 'feeMultiplicator')));
+        ? suggestedGasPrice.times(new BigNumber(toPowerFactor).toPower(TemplateVar.get(template, 'feeMultiplicator')).round(4))
+        : suggestedGasPrice.times(gas).times(new BigNumber(toPowerFactor).toPower(TemplateVar.get(template, 'feeMultiplicator')).round(4));
 }
 
 Template['dapp_selectGasPrice'].onCreated(function(){
