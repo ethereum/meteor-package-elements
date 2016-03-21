@@ -24,7 +24,7 @@ The gas price at start, if non is available
 
 @property defaultGasPrice
 */
-var defaultGasPrice = '50000000000';
+var defaultGasPrice = '20000000000';
 
 /**
 Calculates the gas * gas price.
@@ -45,6 +45,7 @@ var calculateGasInWei = function(template, gas, gasPrice, returnGasPrice){
     return (returnGasPrice)
         ? suggestedGasPrice.times(new BigNumber(toPowerFactor).toPower(TemplateVar.get(template, 'feeMultiplicator')).round(4))
         : suggestedGasPrice.times(gas).times(new BigNumber(toPowerFactor).toPower(TemplateVar.get(template, 'feeMultiplicator')).round(4));
+        // suggested Gas Price = gas x round(1.1 ^ [-5 to +5])
 }
 
 Template['dapp_selectGasPrice'].onCreated(function(){

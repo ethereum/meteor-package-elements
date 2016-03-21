@@ -1,7 +1,7 @@
 Package.describe({
   name: 'ethereum:elements',
   summary: 'Basic elements for Dapps',
-  version: '0.6.7',
+  version: '0.6.8',
   git: 'http://github.com/ethereum/meteor-package-elements'
 });
 
