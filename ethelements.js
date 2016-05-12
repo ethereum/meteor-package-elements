@@ -20,7 +20,7 @@ EthElements = {
 
         @method show
         @param {String|Object} template the template name or an object with `{template: 'name', data: {data: 'context'}}`
-        @param {Object} options the options for the modal like `{closeable: true, closePath: '/dahsboard'}`
+        @param {Object} options the options for the modal like `{closeable: true, closePath: '/dashboard'}`
         */
         'show': function(template, options) {
             options = options || {};
