@@ -32,7 +32,7 @@ Template['dapp_modal_question'].helpers({
 
     @method (hasOk)
     */
-    'hasOk': function(){
+    hasOk: function(){
         return (this.ok);
     },
     /**
@@ -40,20 +40,26 @@ Template['dapp_modal_question'].helpers({
 
     @method (hasCancel)
     */
-    'hasCancel': function(){
+    hasCancel: function(){
         return (this.cancel);
     },
-    /**
-    Get the correct text, if TAPi18n is available.
 
-    @method i18nText
+    /**
+    Returns text for OK button. Can be either an argument, a i18n default text or a default value.
+
+    @method (okButtonText)
     */
-    'i18nText': function(key){
-        if(typeof TAPi18n === 'undefined') {
-            return (key === 'ok') ? 'OK' : 'Cancel';
-        } else {
-            return TAPi18n.__('buttons.'+ key);
-        }
+    okButtonText: function(){
+        return this.modalQuestionOkButtonText || TAPi18n.__('buttons.ok') || 'OK';
+    },
+
+    /**
+    Returns text for Cancel button. Can be either an argument, a i18n default text or a default value.
+
+    @method (cancelButtonText)
+    */
+    cancelButtonText: function(){
+        return this.modalQuestionCancelButtonText || TAPi18n.__('buttons.cancel') || 'Cancel';
     }
 });
 
@@ -68,8 +74,9 @@ Template['dapp_modal_question'].events({
         // hide the modal
         EthElements.Modal.hide();
 
-        if(_.isFunction(this.ok))
+        if(_.isFunction(this.ok)){
             this.ok();
+        }
 
     },
     /**
