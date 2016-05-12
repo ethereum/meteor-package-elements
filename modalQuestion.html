@@ -2,7 +2,7 @@
     {{#if template}}
         {{> Template.dynamic template=template data=data}}
     {{else}}
-        <p>{{text}}</p>
+        <p>{{{text}}}</p>
     {{/if}}
     <div class="dapp-modal-buttons">
         {{#if hasCancel}}
