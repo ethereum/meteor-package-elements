@@ -12,10 +12,12 @@ The select account template
 */
 
 Template['dapp_selectAccount'].onCreated(function(){
-    if (this.data && this.data.value) {
-        TemplateVar.set('value', this.data.value);
-    } else if(this.data && this.data.accounts && this.data.accounts[0]) {
-        TemplateVar.set('value', this.data.accounts[0].address);
+    if(this.data ) {
+        if(this.data.value) {
+            TemplateVar.set('value', this.data.value);
+        } else if(this.data.accounts && this.data.accounts[0]) {
+            TemplateVar.set('value', this.data.accounts[0].address);
+        }
     }
 });
 
