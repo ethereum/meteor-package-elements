@@ -48,6 +48,14 @@ Template['dapp_selectAccount'].helpers({
     */
     'isNotEtherUnit': function() {
         return EthTools.getUnit().toLowerCase() !== 'ether';
+    },
+    /**
+    Check if the current selected unit is not ether
+
+    @method (isNotEtherUnit)
+    */
+    'isAddress': function() {
+        return web3.isAddress(TemplateVar.get('value'));
     }
 });
 

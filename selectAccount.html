@@ -1,5 +1,5 @@
 <template name="dapp_selectAccount">
-    <div class="dapp-select-account">
+    <div class="dapp-select-account {{class}}">
         <select name="{{#if name}}{{name}}{{else}}dapp-select-account{{/if}}" class="{{class}}">
             {{#each accounts}}
                 <option value="{{address}}" {{selected}}>
@@ -13,6 +13,10 @@
                 </option>
             {{/each}}
         </select>
+        {{#if isAddress}}
         {{> dapp_identicon identity=(TemplateVar.get "value") class="dapp-small"}}
+        {{else}}
+        <i class="no-identicon icon-{{TemplateVar.get 'value'}}"></i>
+        {{/if}}
     </div>
 </template>
