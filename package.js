@@ -1,7 +1,7 @@
 Package.describe({
   name: 'ethereum:elements',
   summary: 'Basic elements for Dapps',
-  version: '0.7.4',
+  version: '0.7.6',
   git: 'http://github.com/ethereum/meteor-package-elements'
 });
 
@@ -60,6 +60,9 @@ Package.onUse(function(api) {
 
   api.addFiles('modalQuestion.html', 'client');
   api.addFiles('modalQuestion.js', 'client');
+
+  api.addFiles('output.html', 'client');
+  api.addFiles('output.js', 'client');
 });
 
 // Package.onTest(function(api) {

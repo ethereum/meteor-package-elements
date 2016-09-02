@@ -1,0 +1,23 @@
+<template name="dapp_output">
+
+    <div class="value">
+    {{#if $eq output.type "address"}}
+        <span class="address">
+            {{> dapp_identicon identity=value class="dapp-tiny"}}
+            {{value}} 
+        </span>        
+    {{else}}
+        <strong> {{value}} </strong>
+        <em> {{{extra}}} </em>
+
+    {{/if}}
+    </div>
+    
+    <div class="type">
+        {{type}} 
+        {{#if bits}}
+            ({{bits}} bits)
+        {{/if}}
+    </div>  
+
+</template>
