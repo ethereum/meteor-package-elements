@@ -80,13 +80,7 @@ Template['dapp_addressInput'].events({
     @event input input, change input
     */
     'input input, change input': function(e, template){
-        var value = e.currentTarget.value;
-
-        // remove whitespaces
-        if(value.indexOf(' ') !== -1) {
-            value = value.replace(/ +/, '');
-            e.currentTarget.value = value;
-        }
+        var value = e.currentTarget.value.trim();
 
         // add 0x
         if(value.length > 2 && value.indexOf('0x') === -1) {
