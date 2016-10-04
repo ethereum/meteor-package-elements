@@ -16,15 +16,7 @@ The the factor by which the gas price should be changeable.
 
 @property toPowerFactor
 */
-var toPowerFactor = 1.1;
-
-
-/**
-The gas price at start, if non is available
-
-@property defaultGasPrice
-*/
-var defaultGasPrice = '20000000000';
+var toPowerFactor = 1.4;
 
 /**
 Calculates the gas * gas price.
@@ -33,10 +25,11 @@ Calculates the gas * gas price.
 @return {Number}
 */
 var calculateGasInWei = function(template, gas, gasPrice, returnGasPrice){
-    // console.log('Estimated gas: ', gas);
-    gasPrice = gasPrice || defaultGasPrice;
+    gasPrice = gasPrice || web3.eth.gasPrice.times(new BigNumber(toPowerFactor).toPower(2)) || 50000000000;
     var suggestedGasPrice = new BigNumber(String(gasPrice), 10);
+    console.log('gasPrice', gasPrice.toNumber(), Number(web3.eth.gasPrice));
 
+    
     if(_.isUndefined(gas)) {
         console.warn('No gas provided for {{> dapp_selectGasPrice}}');
         return new BigNumber(0);
@@ -51,7 +44,7 @@ var calculateGasInWei = function(template, gas, gasPrice, returnGasPrice){
 Template['dapp_selectGasPrice'].onCreated(function(){
     TemplateVar.set('gasInWei', '0');
     TemplateVar.set('gasPrice', '0');
-    TemplateVar.set('feeMultiplicator', 0);
+    TemplateVar.set('feeMultiplicator', -2);
 });
 
 
