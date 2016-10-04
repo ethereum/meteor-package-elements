@@ -53,13 +53,8 @@ Template['dapp_dataTextarea'].events({
     @event input textarea, change textarea
     */
     'input textarea, change textarea': function(e, template){
-        var value = e.currentTarget.value;
+        var value = e.currentTarget.value.replace(/\s+/g, '');
 
-        // remove whitespaces
-        if(value.indexOf(' ') !== -1) {
-            value = value.replace(/ +/, '');
-            e.currentTarget.value = value;
-        }
         // remove multiline
         if(value.indexOf("\n") !== -1) {
             value = value.replace("\n", '');
