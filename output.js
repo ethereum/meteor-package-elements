@@ -115,9 +115,9 @@ Template['dapp_output'].helpers({
 
         if (type == "bool") {
            if (value == "true") {
-                return '<span class="icon icon-check"></span>';
+                return new Spacebars.SafeString('<span class="icon icon-check"></span>');
             } else {
-                return '<span class="icon icon-ban"></span>'
+                return new Spacebars.SafeString('<span class="icon icon-ban"></span>')
             } 
         } else if(type.indexOf("int")>0) {
             data = parseInt(value, 10);
@@ -127,7 +127,7 @@ Template['dapp_output'].helpers({
         } else if (type.indexOf("bytes") > 0 ) {
             var returnData = "";
             for(i = 0; i < value.length; i++) {
-                console.log("returnData", returnData);
+                // console.log("returnData", returnData);
                 returnData += value.charAt(i);
             }
             return returnData;
