@@ -25,15 +25,18 @@ Calculates the gas * gas price.
 @return {Number}
 */
 var calculateGasInWei = function(template, gas, gasPrice, returnGasPrice){
-    gasPrice = gasPrice || web3.eth.gasPrice.times(new BigNumber(toPowerFactor).toPower(2)) || 50000000000;
-    var suggestedGasPrice = new BigNumber(String(gasPrice), 10);
-    console.log('gasPrice', gasPrice.toNumber(), Number(web3.eth.gasPrice));
+    // Only defaults to 50 shannon if there's no default set
+    gasPrice = gasPrice || 50000000000;
 
+    // We multiply it by factor^2 to offset the default factor multiplicator that set at -2
+    var suggestedGasPrice = new BigNumber(String(gasPrice), 10).times(new BigNumber(toPowerFactor).toPower(2));
     
     if(_.isUndefined(gas)) {
         console.warn('No gas provided for {{> dapp_selectGasPrice}}');
         return new BigNumber(0);
     }
+
+    console.log('\n\n suggestedGasPrice:', toPowerFactor, TemplateVar.get(template, 'feeMultiplicator'),suggestedGasPrice.times(new BigNumber(toPowerFactor).toPower(TemplateVar.get(template, 'feeMultiplicator')).round(4)).toString(10));
 
     return (returnGasPrice)
         ? suggestedGasPrice.times(new BigNumber(toPowerFactor).toPower(TemplateVar.get(template, 'feeMultiplicator')).round(4))
@@ -62,6 +65,7 @@ Template['dapp_selectGasPrice'].helpers({
             TemplateVar.set('gasInWei', calculateGasInWei(template, this.gas, this.gasPrice).floor().toString(10));
             TemplateVar.set('gasPrice', calculateGasInWei(template, this.gas, this.gasPrice, true).floor().toString(10));
 
+            console.log('fee:', this.gas, this.gasPrice, calculateGasInWei(template, this.gas, this.gasPrice).toString(10));
             // return the fee
             return EthTools.formatBalance(calculateGasInWei(template, this.gas, this.gasPrice).toString(10), '0,0.[000000000000000000]', this.unit);
         }
