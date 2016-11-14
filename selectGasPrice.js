@@ -28,8 +28,11 @@ var calculateGasInWei = function(template, gas, gasPrice, returnGasPrice){
     // Only defaults to 50 shannon if there's no default set
     gasPrice = gasPrice || 50000000000;
 
+    if(!_.isObject(gasPrice))
+        gasPrice = new BigNumber(String(gasPrice), 10);
+
     // We multiply it by factor^2 to offset the default factor multiplicator that set at -2
-    var suggestedGasPrice = new BigNumber(String(gasPrice), 10).times(new BigNumber(toPowerFactor).toPower(2));
+    var suggestedGasPrice = gasPrice.times(new BigNumber(toPowerFactor).toPower(2)).round(4);
     
     if(_.isUndefined(gas)) {
         console.warn('No gas provided for {{> dapp_selectGasPrice}}');
