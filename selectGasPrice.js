@@ -32,19 +32,20 @@ var calculateGasInWei = function(template, gas, gasPrice, returnGasPrice){
         gasPrice = new BigNumber(String(gasPrice), 10);
 
     // We multiply it by factor^2 to offset the default factor multiplicator that set at -2
-    var suggestedGasPrice = gasPrice.times(new BigNumber(toPowerFactor).toPower(2)).round(4);
+    var suggestedGasPrice = gasPrice.times(new BigNumber(toPowerFactor).toPower(2));
     
     if(_.isUndefined(gas)) {
         console.warn('No gas provided for {{> dapp_selectGasPrice}}');
         return new BigNumber(0);
     }
-
-    console.log('\n\n suggestedGasPrice:', toPowerFactor, TemplateVar.get(template, 'feeMultiplicator'),suggestedGasPrice.times(new BigNumber(toPowerFactor).toPower(TemplateVar.get(template, 'feeMultiplicator')).round(4)).toString(10));
+    
+    // divide and multiply to round it to the nearest billion wei (1 shannon)
+    var billion = new BigNumber(1000000000);
+    suggestedGasPrice = suggestedGasPrice.times(new BigNumber(toPowerFactor).toPower(TemplateVar.get(template, 'feeMultiplicator'))).dividedBy(billion).round().times(billion);
 
     return (returnGasPrice)
-        ? suggestedGasPrice.times(new BigNumber(toPowerFactor).toPower(TemplateVar.get(template, 'feeMultiplicator')).round(4))
-        : suggestedGasPrice.times(gas).times(new BigNumber(toPowerFactor).toPower(TemplateVar.get(template, 'feeMultiplicator')).round(4));
-        // suggested Gas Price = gas x round(1.1 ^ [-5 to +5])
+        ? suggestedGasPrice
+        : suggestedGasPrice.times(gas);
 }
 
 Template['dapp_selectGasPrice'].onCreated(function(){
