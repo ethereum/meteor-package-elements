@@ -69,7 +69,6 @@ Template['dapp_selectGasPrice'].helpers({
             TemplateVar.set('gasInWei', calculateGasInWei(template, this.gas, this.gasPrice).floor().toString(10));
             TemplateVar.set('gasPrice', calculateGasInWei(template, this.gas, this.gasPrice, true).floor().toString(10));
 
-            console.log('fee:', this.gas, this.gasPrice, calculateGasInWei(template, this.gas, this.gasPrice).toString(10));
             // return the fee
             return EthTools.formatBalance(calculateGasInWei(template, this.gas, this.gasPrice).toString(10), '0,0.[000000000000000000]', this.unit);
         }
