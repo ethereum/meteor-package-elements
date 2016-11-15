@@ -25,20 +25,27 @@ Calculates the gas * gas price.
 @return {Number}
 */
 var calculateGasInWei = function(template, gas, gasPrice, returnGasPrice){
-    gasPrice = gasPrice || web3.eth.gasPrice.times(new BigNumber(toPowerFactor).toPower(2)) || 50000000000;
-    var suggestedGasPrice = new BigNumber(String(gasPrice), 10);
-    console.log('gasPrice', gasPrice.toNumber(), Number(web3.eth.gasPrice));
+    // Only defaults to 50 shannon if there's no default set
+    gasPrice = gasPrice || 50000000000;
 
+    if(!_.isObject(gasPrice))
+        gasPrice = new BigNumber(String(gasPrice), 10);
+
+    // We multiply it by factor^2 to offset the default factor multiplicator that set at -2
+    var suggestedGasPrice = gasPrice.times(new BigNumber(toPowerFactor).toPower(2));
     
     if(_.isUndefined(gas)) {
         console.warn('No gas provided for {{> dapp_selectGasPrice}}');
         return new BigNumber(0);
     }
+    
+    // divide and multiply to round it to the nearest billion wei (1 shannon)
+    var billion = new BigNumber(1000000000);
+    suggestedGasPrice = suggestedGasPrice.times(new BigNumber(toPowerFactor).toPower(TemplateVar.get(template, 'feeMultiplicator'))).dividedBy(billion).round().times(billion);
 
     return (returnGasPrice)
-        ? suggestedGasPrice.times(new BigNumber(toPowerFactor).toPower(TemplateVar.get(template, 'feeMultiplicator')).round(4))
-        : suggestedGasPrice.times(gas).times(new BigNumber(toPowerFactor).toPower(TemplateVar.get(template, 'feeMultiplicator')).round(4));
-        // suggested Gas Price = gas x round(1.1 ^ [-5 to +5])
+        ? suggestedGasPrice
+        : suggestedGasPrice.times(gas);
 }
 
 Template['dapp_selectGasPrice'].onCreated(function(){
