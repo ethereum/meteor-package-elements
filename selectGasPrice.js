@@ -16,7 +16,7 @@ The the factor by which the gas price should be changeable.
 
 @property toPowerFactor
 */
-var toPowerFactor = 1.4;
+var toPowerFactor = 2;
 
 /**
 Calculates the gas * gas price.
@@ -25,33 +25,32 @@ Calculates the gas * gas price.
 @return {Number}
 */
 var calculateGasInWei = function(template, gas, gasPrice, returnGasPrice){
-    // Only defaults to 50 shannon if there's no default set
-    gasPrice = gasPrice || 50000000000;
+    // Only defaults to 20 shannon if there's no default set
+    gasPrice = gasPrice || 20000000000;
 
     if(!_.isObject(gasPrice))
         gasPrice = new BigNumber(String(gasPrice), 10);
-
-    // We multiply it by factor^2 to offset the default factor multiplicator that set at -2
-    var suggestedGasPrice = gasPrice.times(new BigNumber(toPowerFactor).toPower(2));
     
     if(_.isUndefined(gas)) {
         console.warn('No gas provided for {{> dapp_selectGasPrice}}');
         return new BigNumber(0);
     }
+
+    var feeMultiplicator = Number(TemplateVar.get(template, 'feeMultiplicator'));
     
     // divide and multiply to round it to the nearest billion wei (1 shannon)
     var billion = new BigNumber(1000000000);
-    suggestedGasPrice = suggestedGasPrice.times(new BigNumber(toPowerFactor).toPower(TemplateVar.get(template, 'feeMultiplicator'))).dividedBy(billion).round().times(billion);
+    gasPrice = gasPrice.times(new BigNumber(toPowerFactor).toPower(feeMultiplicator)).dividedBy(billion).round().times(billion);
 
     return (returnGasPrice)
-        ? suggestedGasPrice
-        : suggestedGasPrice.times(gas);
+        ? gasPrice
+        : gasPrice.times(gas);
 }
 
 Template['dapp_selectGasPrice'].onCreated(function(){
     TemplateVar.set('gasInWei', '0');
     TemplateVar.set('gasPrice', '0');
-    TemplateVar.set('feeMultiplicator', -2);
+    TemplateVar.set('feeMultiplicator', 0);
 });
 
 
@@ -89,10 +88,13 @@ Template['dapp_selectGasPrice'].helpers({
     @method i18nText
     */
     'i18nText': function(key){
-        if(typeof TAPi18n === 'undefined') {
-            return (key === 'high') ? '+' : '-';
-        } else {
+        if(typeof TAPi18n !== 'undefined' 
+            && TAPi18n.__('elements.selectGasPrice.'+ key) !== 'elements.selectGasPrice.'+ key) {
             return TAPi18n.__('elements.selectGasPrice.'+ key);
+        } else if (typeof this[key] !== 'undefined') {
+            return this[key];
+        } else {
+            return (key === 'high') ? '+' : '-';
         }
     }
 });
