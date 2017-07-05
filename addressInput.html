@@ -1,10 +1,18 @@
 <template name="dapp_addressInput">
-    <div class="dapp-address-input">
+    <div class="dapp-address-input {{#if TemplateVar.get 'hasName'}}has-name{{/if}}">
         <input type="text" name="{{name}}" placeholder="{{placeholder}}" class="{{class}} {{#unless TemplateVar.get 'isValid'}}dapp-error{{/unless}} {{#unless TemplateVar.get 'isChecksum'}} dapp-non-checksum {{/unless}}" {{additionalAttributes}} value="{{value}}" title="{{#unless TemplateVar.get 'isChecksum'}}{{i18nText}}{{/unless}}" >
+
+        {{#if TemplateVar.get 'hasName'}}
+        <span class='ens-name'>{{ensDisplay}}</span>
+        {{/if}}
+
         {{#if TemplateVar.get "isValid"}}
             {{> dapp_identicon identity=address class="dapp-small"}}
         {{else}}
             <i class="icon-shield"></i>
         {{/if}}
+        
+
+
     </div>
 </template>

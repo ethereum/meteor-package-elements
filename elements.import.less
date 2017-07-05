@@ -51,6 +51,8 @@
         color: @colorError;
         background: fadeout(@colorError, 90%);
         border-color: fadeout(@colorError, 85%);
+        transition-delay: 1s;
+        transition: background-color ease-in-out 3s, color ease-in-out 1s;
     }
 
     &:disabled {
@@ -176,6 +178,10 @@ input[type="range"] {
             font-weight: 600;
         }
     }
+
+    &.no-margins {
+        margin: 0;
+    }
 }
 
 .dapp-selector,
@@ -217,6 +223,26 @@ input[type="range"] {
 
 }
 
+@keyframes shrinkText {
+    from {
+        font-size: 150%;
+        opacity: 0.5;
+    }
+    to {
+        font-size: 100%;
+        opacity: 1;
+    }
+}
+
+@keyframes opacityText {
+    from {
+        color: @colorGrayLight;                
+    }
+    to {
+        color: @colorGrayDark;        
+    }
+}
+
 .dapp-address-input,
 .dapp-select-account {
     position: relative;
@@ -227,8 +253,11 @@ input[type="range"] {
         width: 440px;
         z-index: 1;
         margin-top: 0;
+        height: @gridHeight*2;
         padding-left: @gridWidth*1.3;
         padding-right: 0;
+        transition-delay: 0s;
+        transition: background-color ease-in-out 1s, color ease-in-out 1s;
 
         &.dapp-large {
             font-size: 1.5em;
@@ -271,7 +300,7 @@ input[type="range"] {
     .dapp-identicon {
         z-index: 2;
         position: absolute;
-        top: 3px;
+        top: 4px;
         left: 8px;
         width: @gridWidth/1.2;
         height: @gridWidth/1.2;
@@ -309,6 +338,39 @@ input[type="range"] {
         text-transform: uppercase;
         opacity: 0.6;
     }
+
+     
+
+    &.has-name {
+        .ens-name {
+            position: absolute;
+            left: 40px;
+            top: 0px;
+            color: @colorLink;
+            animation-name: shrinkText;
+            animation-duration: 0.1s;
+            animation-timing-function: ease-out;
+        }
+
+        input:not(:focus) {
+            font-size: 66%;
+            padding-top: 17px;
+            color: @colorGrayDark;
+            font-weight: 400;
+            padding-bottom: 5px;
+            animation-name: opacityText;
+            animation-duration: 1s;
+            animation-timing-function: ease-out;
+        }
+
+        input:focus + .ens-name {
+            display: none;
+            color: @colorGrayDark;
+            font-size: 66%;
+        }
+    }
+
+    
 }
 
 .dapp-output {
