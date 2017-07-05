@@ -68,7 +68,6 @@ Template['dapp_addressInput'].onCreated(function(){
 
     if(this.data && this.data.value) {
         TemplateVar.set('value', this.data.value);
-        console.log('value: ', this.data.value);
     }
 });
 
@@ -87,10 +86,10 @@ Template['dapp_addressInput'].helpers({
     'address': function(){
         var address = TemplateVar.get('value');
 
-        if(Template.instance().view.isRendered && Template.instance().find('input').value !== address)
-            Template.instance().$('input').trigger('change');
+        // if(Template.instance().view.isRendered && Template.instance().find('input').value !== address)
+            // Template.instance().$('input').trigger('change');
 
-        return (_.isString(address)) ? '0x'+ address.replace('0x','') : false;
+        return (_.isString(address) && web3.isAddress(address)) ? '0x'+ address.replace('0x','') : false;
     },
     /**
     Return the autofocus or disabled attribute.
@@ -132,9 +131,11 @@ Template['dapp_addressInput'].events({
     
     @event input input, change input
     */
-    'input input': function(e, template){
-        var value = e.currentTarget.value.replace(/\s+/g, '');
-        TemplateVar.set(template, 'hasName', false);                
+    'input input, keyup input': function(e, template){
+        if(!e.currentTarget.value) return;
+
+        var value = e.currentTarget.value.replace(/[\s\*\(\)\!\?\#\$\%]+/g, '') ;
+        TemplateVar.set(template, 'hasName', false); 
 
         // add 0x
         if(value.length > 38 
@@ -172,10 +173,10 @@ Template['dapp_addressInput'].events({
         } else {
             if (value.slice(-4) !== '.eth') value = value + '.eth';
 
-            TemplateVar.set('hasName', false);                
+            TemplateVar.set('hasName', false);
+            TemplateVar.set('isValid', false);
+            TemplateVar.set('value', undefined);
 
-            var _template = template;
-            var thisInput = e.currentTarget
             getAddr(value, (addr) => {
                 TemplateVar.set(template, 'hasName', true);                
                 TemplateVar.set(template, 'isValid', true);
@@ -186,13 +187,8 @@ Template['dapp_addressInput'].events({
                 getName(addr, (name) => {
                     TemplateVar.set(template, 'ensName', name);
                 })
-            });
-            
-            TemplateVar.set('isValid', false);
-            TemplateVar.set('isChecksum', false);
-            TemplateVar.set('value', undefined);
+            });   
         }
-
     },
     /**
     Set the address while typing
@@ -219,7 +215,10 @@ Template['dapp_addressInput'].events({
     
     @event click a
     */
-    'click a': function(e){
+    'click a, click .ens-name': function(e, template){
+        // focus on input element
+        var inputElement = template.find("input")
+        inputElement.focus();
         e.preventDefault();
     }
 });
