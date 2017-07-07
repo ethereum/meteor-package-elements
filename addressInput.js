@@ -105,7 +105,7 @@ Template['dapp_addressInput'].onCreated(function(){
 });
 
 Template['dapp_addressInput'].onRendered(function(){
-    if(this.data && this.data.value) {
+    if(this.data) {
         this.$('input').trigger('change');
     }
 });
@@ -164,7 +164,7 @@ Template['dapp_addressInput'].events({
     
     @event input input, change input
     */
-    'input input, keyup input': function(e, template){
+    'input input, keyup input, blur input': function(e, template){
         if(!e.currentTarget.value) return;
 
         var value = e.currentTarget.value.replace(/[\s\*\(\)\!\?\#\$\%]+/g, '') ;
