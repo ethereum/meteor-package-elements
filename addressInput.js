@@ -18,12 +18,17 @@ function namehash(name) {
     return node.toString();
 }
 
-var ensContract = web3.eth.contract([{"constant":true,"inputs":[{"name":"node","type":"bytes32"}],"name":"resolver","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"node","type":"bytes32"}],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"node","type":"bytes32"},{"name":"label","type":"bytes32"},{"name":"owner","type":"address"}],"name":"setSubnodeOwner","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"node","type":"bytes32"},{"name":"ttl","type":"uint64"}],"name":"setTTL","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"node","type":"bytes32"}],"name":"ttl","outputs":[{"name":"","type":"uint64"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"node","type":"bytes32"},{"name":"resolver","type":"address"}],"name":"setResolver","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"node","type":"bytes32"},{"name":"owner","type":"address"}],"name":"setOwner","outputs":[],"payable":false,"type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"name":"node","type":"bytes32"},{"indexed":false,"name":"owner","type":"address"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"node","type":"bytes32"},{"indexed":true,"name":"label","type":"bytes32"},{"indexed":false,"name":"owner","type":"address"}],"name":"NewOwner","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"node","type":"bytes32"},{"indexed":false,"name":"resolver","type":"address"}],"name":"NewResolver","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"node","type":"bytes32"},{"indexed":false,"name":"ttl","type":"uint64"}],"name":"NewTTL","type":"event"}]);
-var ens = ensContract.at('0x314159265dd8dbb310642f98f50c066173c1259b');
+let ensContractAbi = [{"constant":true,"inputs":[{"name":"node","type":"bytes32"}],"name":"resolver","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"node","type":"bytes32"}],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"node","type":"bytes32"},{"name":"label","type":"bytes32"},{"name":"owner","type":"address"}],"name":"setSubnodeOwner","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"node","type":"bytes32"},{"name":"ttl","type":"uint64"}],"name":"setTTL","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"node","type":"bytes32"}],"name":"ttl","outputs":[{"name":"","type":"uint64"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"node","type":"bytes32"},{"name":"resolver","type":"address"}],"name":"setResolver","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"node","type":"bytes32"},{"name":"owner","type":"address"}],"name":"setOwner","outputs":[],"payable":false,"type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"name":"node","type":"bytes32"},{"indexed":false,"name":"owner","type":"address"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"node","type":"bytes32"},{"indexed":true,"name":"label","type":"bytes32"},{"indexed":false,"name":"owner","type":"address"}],"name":"NewOwner","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"node","type":"bytes32"},{"indexed":false,"name":"resolver","type":"address"}],"name":"NewResolver","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"node","type":"bytes32"},{"indexed":false,"name":"ttl","type":"uint64"}],"name":"NewTTL","type":"event"}];
 
-var resolverContract = web3.eth.contract([{"constant":true,"inputs":[{"name":"interfaceID","type":"bytes4"}],"name":"supportsInterface","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"node","type":"bytes32"},{"name":"contentTypes","type":"uint256"}],"name":"ABI","outputs":[{"name":"contentType","type":"uint256"},{"name":"data","type":"bytes"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"node","type":"bytes32"},{"name":"x","type":"bytes32"},{"name":"y","type":"bytes32"}],"name":"setPubkey","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"node","type":"bytes32"}],"name":"content","outputs":[{"name":"ret","type":"bytes32"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"node","type":"bytes32"}],"name":"addr","outputs":[{"name":"ret","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"node","type":"bytes32"},{"name":"contentType","type":"uint256"},{"name":"data","type":"bytes"}],"name":"setABI","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"node","type":"bytes32"}],"name":"name","outputs":[{"name":"ret","type":"string"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"node","type":"bytes32"},{"name":"name","type":"string"}],"name":"setName","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"node","type":"bytes32"},{"name":"hash","type":"bytes32"}],"name":"setContent","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"node","type":"bytes32"}],"name":"pubkey","outputs":[{"name":"x","type":"bytes32"},{"name":"y","type":"bytes32"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"node","type":"bytes32"},{"name":"addr","type":"address"}],"name":"setAddr","outputs":[],"payable":false,"type":"function"},{"inputs":[{"name":"ensAddr","type":"address"}],"payable":false,"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"node","type":"bytes32"},{"indexed":false,"name":"a","type":"address"}],"name":"AddrChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"node","type":"bytes32"},{"indexed":false,"name":"hash","type":"bytes32"}],"name":"ContentChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"node","type":"bytes32"},{"indexed":false,"name":"name","type":"string"}],"name":"NameChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"node","type":"bytes32"},{"indexed":true,"name":"contentType","type":"uint256"}],"name":"ABIChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"node","type":"bytes32"},{"indexed":false,"name":"x","type":"bytes32"},{"indexed":false,"name":"y","type":"bytes32"}],"name":"PubkeyChanged","type":"event"}]);
 
-function getAddr(name, callback) {
+
+var resolverContractAbi = [{"constant":true,"inputs":[{"name":"interfaceID","type":"bytes4"}],"name":"supportsInterface","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"node","type":"bytes32"},{"name":"contentTypes","type":"uint256"}],"name":"ABI","outputs":[{"name":"contentType","type":"uint256"},{"name":"data","type":"bytes"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"node","type":"bytes32"},{"name":"x","type":"bytes32"},{"name":"y","type":"bytes32"}],"name":"setPubkey","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"node","type":"bytes32"}],"name":"content","outputs":[{"name":"ret","type":"bytes32"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"node","type":"bytes32"}],"name":"addr","outputs":[{"name":"ret","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"node","type":"bytes32"},{"name":"contentType","type":"uint256"},{"name":"data","type":"bytes"}],"name":"setABI","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"node","type":"bytes32"}],"name":"name","outputs":[{"name":"ret","type":"string"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"node","type":"bytes32"},{"name":"name","type":"string"}],"name":"setName","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"node","type":"bytes32"},{"name":"hash","type":"bytes32"}],"name":"setContent","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"node","type":"bytes32"}],"name":"pubkey","outputs":[{"name":"x","type":"bytes32"},{"name":"y","type":"bytes32"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"node","type":"bytes32"},{"name":"addr","type":"address"}],"name":"setAddr","outputs":[],"payable":false,"type":"function"},{"inputs":[{"name":"ensAddr","type":"address"}],"payable":false,"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"node","type":"bytes32"},{"indexed":false,"name":"a","type":"address"}],"name":"AddrChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"node","type":"bytes32"},{"indexed":false,"name":"hash","type":"bytes32"}],"name":"ContentChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"node","type":"bytes32"},{"indexed":false,"name":"name","type":"string"}],"name":"NameChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"node","type":"bytes32"},{"indexed":true,"name":"contentType","type":"uint256"}],"name":"ABIChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"node","type":"bytes32"},{"indexed":false,"name":"x","type":"bytes32"},{"indexed":false,"name":"y","type":"bytes32"}],"name":"PubkeyChanged","type":"event"}];
+
+var ensAddress = '0x314159265dd8dbb310642f98f50c066173c1259b';
+
+function getAddr(name, ens, callback) {
+    var resolverContract = web3.eth.contract(resolverContractAbi);
+
     var node = namehash(name);
     // get a resolver address for that name
     ens.resolver(node, (err, resolverAddress) => {
@@ -38,7 +43,9 @@ function getAddr(name, callback) {
     })
 }
 
-function getName(address, callback) {
+function getName(address, ens, callback) {
+    var resolverContract = web3.eth.contract(resolverContractAbi);
+
     var node = namehash(address.toLowerCase().replace('0x','')+'.addr.reverse');
     // get a resolver address for that name
     ens.resolver(node, (err, resolverAddress) => {
@@ -61,14 +68,40 @@ The address input template, containg the identicon.
 */
 
 Template['dapp_addressInput'].onCreated(function(){
+    var template = this;
 
     // default set to true, to show no error
     TemplateVar.set('isValid', true);
     TemplateVar.set('isChecksum', true); 
 
+    
+
     if(this.data && this.data.value) {
         TemplateVar.set('value', this.data.value);
     }
+
+    var ensContract = web3.eth.contract(ensContractAbi);
+    // var ensContract = web3.eth.contract(ensContractAbi);
+    // var ens = ensContract.at(ensAddress);
+
+    ensContract.at(ensAddress, (err, ens) => {
+        TemplateVar.set(template, 'ensContract', ens)
+    });
+
+    TemplateVar.set(template, 'ensAvailable', true)
+
+    web3.eth.getSyncing((err, syncing)=> { 
+        if (!err && !syncing) {
+            console.log('not syncing')
+            web3.eth.getCode(ensAddress, (err, code)=> {
+                if (!err && code.length > 2) {
+                    console.log('found ens')
+                    TemplateVar.set(template, 'ensAvailable', true)
+                } 
+            })
+        } 
+    })
+
 });
 
 Template['dapp_addressInput'].onRendered(function(){
@@ -151,17 +184,22 @@ Template['dapp_addressInput'].events({
                 TemplateVar.set('value', '0x'+ value.replace('0x',''));
                 TemplateVar.set('isChecksum', web3.isChecksumAddress(value));
                 
-                // if an address was added, check if there's a name associated with it
-                getName(value, (name) => {
-                    // Any address can claim to be any name. Double check it!
-                    getAddr(name, (addr) => {
-                        TemplateVar.set(template, 'hasName', true);                
-                        TemplateVar.set(template, 'ensName', name);
-                        TemplateVar.set(template, 'isValid', true);
-                        TemplateVar.set(template, 'isChecksum', true);  
-                        TemplateVar.set(template, 'value', web3.toChecksumAddress(addr));
-                    });
-                })
+                if (TemplateVar.get('ensAvailable')) {
+                    var ens = TemplateVar.get('ensContract');
+
+                    // if an address was added, check if there's a name associated with it
+                    getName(value, ens, (name) => {
+                        // Any address can claim to be any name. Double check it!
+                        getAddr(name, ens, (addr) => {
+                            TemplateVar.set(template, 'hasName', true);                
+                            TemplateVar.set(template, 'ensName', name);
+                            TemplateVar.set(template, 'isValid', true);
+                            TemplateVar.set(template, 'isChecksum', true);  
+                            TemplateVar.set(template, 'value', web3.toChecksumAddress(addr));
+                        });
+                    })  
+                }
+                
 
             } else {
                 TemplateVar.set('value', undefined);
@@ -170,21 +208,22 @@ Template['dapp_addressInput'].events({
 
             e.currentTarget.value = value;
 
-        } else {
+        } else if (TemplateVar.get('ensAvailable')) {
             if (value.slice(-4) !== '.eth') value = value + '.eth';
 
             TemplateVar.set('hasName', false);
             TemplateVar.set('isValid', false);
             TemplateVar.set('value', undefined);
+            var ens = TemplateVar.get('ensContract');
 
-            getAddr(value, (addr) => {
+            getAddr(value, ens, (addr) => {
                 TemplateVar.set(template, 'hasName', true);                
                 TemplateVar.set(template, 'isValid', true);
                 TemplateVar.set(template, 'isChecksum', true);  
                 TemplateVar.set(template, 'value', web3.toChecksumAddress(addr));
                 TemplateVar.set(template, 'ensName', value);
                 // check name
-                getName(addr, (name) => {
+                getName(addr, ens, (name) => {
                     TemplateVar.set(template, 'ensName', name);
                 })
             });   
