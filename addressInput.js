@@ -20,8 +20,6 @@ function namehash(name) {
 
 let ensContractAbi = [{"constant":true,"inputs":[{"name":"node","type":"bytes32"}],"name":"resolver","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"node","type":"bytes32"}],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"node","type":"bytes32"},{"name":"label","type":"bytes32"},{"name":"owner","type":"address"}],"name":"setSubnodeOwner","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"node","type":"bytes32"},{"name":"ttl","type":"uint64"}],"name":"setTTL","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"node","type":"bytes32"}],"name":"ttl","outputs":[{"name":"","type":"uint64"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"node","type":"bytes32"},{"name":"resolver","type":"address"}],"name":"setResolver","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"node","type":"bytes32"},{"name":"owner","type":"address"}],"name":"setOwner","outputs":[],"payable":false,"type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"name":"node","type":"bytes32"},{"indexed":false,"name":"owner","type":"address"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"node","type":"bytes32"},{"indexed":true,"name":"label","type":"bytes32"},{"indexed":false,"name":"owner","type":"address"}],"name":"NewOwner","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"node","type":"bytes32"},{"indexed":false,"name":"resolver","type":"address"}],"name":"NewResolver","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"node","type":"bytes32"},{"indexed":false,"name":"ttl","type":"uint64"}],"name":"NewTTL","type":"event"}];
 
-
-
 var resolverContractAbi = [{"constant":true,"inputs":[{"name":"interfaceID","type":"bytes4"}],"name":"supportsInterface","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"node","type":"bytes32"},{"name":"contentTypes","type":"uint256"}],"name":"ABI","outputs":[{"name":"contentType","type":"uint256"},{"name":"data","type":"bytes"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"node","type":"bytes32"},{"name":"x","type":"bytes32"},{"name":"y","type":"bytes32"}],"name":"setPubkey","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"node","type":"bytes32"}],"name":"content","outputs":[{"name":"ret","type":"bytes32"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"node","type":"bytes32"}],"name":"addr","outputs":[{"name":"ret","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"node","type":"bytes32"},{"name":"contentType","type":"uint256"},{"name":"data","type":"bytes"}],"name":"setABI","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"node","type":"bytes32"}],"name":"name","outputs":[{"name":"ret","type":"string"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"node","type":"bytes32"},{"name":"name","type":"string"}],"name":"setName","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"node","type":"bytes32"},{"name":"hash","type":"bytes32"}],"name":"setContent","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"node","type":"bytes32"}],"name":"pubkey","outputs":[{"name":"x","type":"bytes32"},{"name":"y","type":"bytes32"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"node","type":"bytes32"},{"name":"addr","type":"address"}],"name":"setAddr","outputs":[],"payable":false,"type":"function"},{"inputs":[{"name":"ensAddr","type":"address"}],"payable":false,"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"node","type":"bytes32"},{"indexed":false,"name":"a","type":"address"}],"name":"AddrChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"node","type":"bytes32"},{"indexed":false,"name":"hash","type":"bytes32"}],"name":"ContentChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"node","type":"bytes32"},{"indexed":false,"name":"name","type":"string"}],"name":"NameChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"node","type":"bytes32"},{"indexed":true,"name":"contentType","type":"uint256"}],"name":"ABIChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"node","type":"bytes32"},{"indexed":false,"name":"x","type":"bytes32"},{"indexed":false,"name":"y","type":"bytes32"}],"name":"PubkeyChanged","type":"event"}];
 
 var ensAddress = '0x314159265dd8dbb310642f98f50c066173c1259b';
@@ -74,16 +72,11 @@ Template['dapp_addressInput'].onCreated(function(){
     TemplateVar.set('isValid', true);
     TemplateVar.set('isChecksum', true); 
 
-    
-
     if(this.data && this.data.value) {
         TemplateVar.set('value', this.data.value);
     }
 
     var ensContract = web3.eth.contract(ensContractAbi);
-    // var ensContract = web3.eth.contract(ensContractAbi);
-    // var ens = ensContract.at(ensAddress);
-
     ensContract.at(ensAddress, (err, ens) => {
         TemplateVar.set(template, 'ensContract', ens)
     });
@@ -92,10 +85,10 @@ Template['dapp_addressInput'].onCreated(function(){
 
     web3.eth.getSyncing((err, syncing)=> { 
         if (!err && !syncing) {
-            console.log('not syncing')
+            // cannot use ENS while syncing
             web3.eth.getCode(ensAddress, (err, code)=> {
                 if (!err && code.length > 2) {
-                    console.log('found ens')
+                    // check if there's code on the address
                     TemplateVar.set(template, 'ensAvailable', true)
                 } 
             })
@@ -164,7 +157,7 @@ Template['dapp_addressInput'].events({
     
     @event input input, change input
     */
-    'input input, keyup input, blur input': function(e, template){
+    'input input, keyup input': function(e, template){
         if(!e.currentTarget.value) return;
 
         var value = e.currentTarget.value.replace(/[\s\*\(\)\!\?\#\$\%]+/g, '') ;
@@ -196,6 +189,7 @@ Template['dapp_addressInput'].events({
                             TemplateVar.set(template, 'isValid', true);
                             TemplateVar.set(template, 'isChecksum', true);  
                             TemplateVar.set(template, 'value', web3.toChecksumAddress(addr));
+                            e.currentTarget.value = web3.toChecksumAddress(addr);
                         });
                     })  
                 }
@@ -222,6 +216,7 @@ Template['dapp_addressInput'].events({
                 TemplateVar.set(template, 'isChecksum', true);  
                 TemplateVar.set(template, 'value', web3.toChecksumAddress(addr));
                 TemplateVar.set(template, 'ensName', value);
+                // e.currentTarget.value = web3.toChecksumAddress(addr);
                 // check name
                 getName(addr, ens, (name) => {
                     TemplateVar.set(template, 'ensName', name);
