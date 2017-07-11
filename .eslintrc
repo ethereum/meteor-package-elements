@@ -1,0 +1,8 @@
+extends: eslint-config-es5
+
+globals:
+  web3: true
+  TemplateVar: true
+  Template: true
+  _: true
+  TAPi18n: true
