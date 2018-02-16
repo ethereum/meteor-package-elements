@@ -21,7 +21,7 @@ var cache = {};
 Template['dapp_identicon'].helpers({
     /**
     Make sure the identity is lowercased
-    
+
     @method (identity)
     */
     'identity': function(identity){
@@ -29,21 +29,34 @@ Template['dapp_identicon'].helpers({
     },
     /**
     Return the cached or generated identicon
-    
+
     @method (identiconData)
     */
     'identiconData': function(identity){
-
         // remove items if the cache is larger than 50 entries
-        if(_.size(cache) > 50) {
+        if(_.size(cache) > 100) {
             delete cache[Object.keys(cache)[0]];
         }
 
-        return cache['ID_'+ identity] || (cache['ID_'+ identity] =  blockies.create({
+        return cache['ID_'+ identity] || (cache['ID_'+ identity] = hqx(hqx(blockies.create({
+            seed: identity,
+            size: 8,
+            scale: 1
+        }), 4),4).toDataURL());
+
+    },
+    /**
+    Return the cached or generated identicon
+
+    @method (identiconDataPixel)
+    */
+    'identiconDataPixel': function(identity){
+        return cache['IDP_'+ identity] || (cache['IDP_'+ identity] = blockies.create({
             seed: identity,
             size: 8,
             scale: 8
         }).toDataURL());
+
     },
     /**
     Get the correct text, if TAPi18n is available.
