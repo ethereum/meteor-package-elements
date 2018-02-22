@@ -85,6 +85,8 @@ Template.dapp_addressInput.onCreated(function() {
   if (ensContract) {
     TemplateVar.set(template, 'ensContract', ensContract);
     TemplateVar.set(template, 'ensAvailable', true);
+  } else {
+    TemplateVar.set(template, 'ensAvailable', false);
   }
 
   web3.eth.isSyncing(function(err, syncing) {
