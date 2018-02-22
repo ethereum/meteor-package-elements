@@ -55,7 +55,7 @@ Template['dapp_selectAccount'].helpers({
     @method (isNotEtherUnit)
     */
     'isAddress': function() {
-        return web3.isAddress(TemplateVar.get('value'));
+        return web3.utils.isAddress(TemplateVar.get('value'));
     }
 });
 

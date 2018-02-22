@@ -6,7 +6,7 @@ Template Controllers
 */
 
 var sha3 = function(str, opt) {
-  return '0x' + web3.sha3(str, opt).replace('0x', '');
+  return '0x' + web3.utils.sha3(str, opt).replace('0x', '');
 };
 
 function namehash(name) {
@@ -27,15 +27,16 @@ var resolverContractAbi = [{'constant': true, 'inputs': [{'name': 'interfaceID',
 var ensAddress = '0x314159265dd8dbb310642f98f50c066173c1259b';
 
 function getAddr(name, ens, callback) {
-  var resolverContract = web3.eth.contract(resolverContractAbi);
+  var resolverContract = new web3.eth.Contract(resolverContractAbi);
 
   var node = namehash(name);
   // get a resolver address for that name
-  ens.resolver(node, function(err, resolverAddress) {
-    if (!err && resolverAddress != 0) {
+  ens.methods.resolver(node).call().then(function(resolverAddress) {
+    if (resolverAddress != 0) {
       // if you find one, find the addr of that resolver
-      resolverContract.at(resolverAddress).addr(node, function(error, result) {
-        if (!err && result != 0 && callback) {
+      resolverContract.options.address = resolverAddress;
+      resolverContract.methods.addr(node).call().then(function(result) {
+        if (result != 0 && callback) {
           callback(result);
         }
       });
@@ -44,14 +45,15 @@ function getAddr(name, ens, callback) {
 }
 
 function getName(address, ens, callback) {
-  var resolverContract = web3.eth.contract(resolverContractAbi);
+  var resolverContract = new web3.eth.Contract(resolverContractAbi);
 
   var node = namehash(address.toLowerCase().replace('0x', '') + '.addr.reverse');
   // get a resolver address for that name
-  ens.resolver(node, function(err, resolverAddress) {
-    if (!err && resolverAddress != 0) {
+  ens.methods.resolver(node).call().then(function(resolverAddress) {
+    if (resolverAddress != 0) {
       // if you find one, find the name on that resolver
-      resolverContract.at(resolverAddress).name(node, function(error, result) {
+      resolverContract.options.address = resolverAddress;
+      resolverContract.methods.name(node, function(error, result) {
         if (!err && result != 0 && callback) {
           callback(result);
         }
@@ -78,14 +80,14 @@ Template.dapp_addressInput.onCreated(function() {
     TemplateVar.set('value', this.data.value);
   }
 
-  var ensContract = web3.eth.contract(ensContractAbi);
-  ensContract.at(ensAddress, function(err, ens) {
-    TemplateVar.set(template, 'ensContract', ens);
-  });
+  var ensContract = new web3.eth.Contract(ensContractAbi, ensAddress);
+    
+  if (ensContract) {
+    TemplateVar.set(template, 'ensContract', ensContract);
+    TemplateVar.set(template, 'ensAvailable', true);
+  }
 
-  TemplateVar.set(template, 'ensAvailable', true);
-
-  web3.eth.getSyncing(function(err, syncing) {
+  web3.eth.isSyncing(function(err, syncing) {
     if (!err && !syncing) {
       // cannot use ENS while syncing
       web3.eth.getCode(ensAddress, function(err, code) {
@@ -116,7 +118,7 @@ Template.dapp_addressInput.helpers({
     // if(Template.instance().view.isRendered && Template.instance().find('input').value !== address)
     // Template.instance().$('input').trigger('change');
 
-    return (_.isString(address) && web3.isAddress(address)) ? '0x' + address.replace('0x', '') : false;
+    return (_.isString(address) && web3.utils.isAddress(address)) ? '0x' + address.replace('0x', '') : false;
   },
   /**
     Return the autofocus or disabled attribute.
@@ -167,12 +169,12 @@ Template.dapp_addressInput.events({
       value = '0x' + value;
     }
 
-    if (web3.isAddress(value) || _.isEmpty(value)) {
+    if (web3.utils.isAddress(value) || _.isEmpty(value)) {
       TemplateVar.set('isValid', true);
 
       if (!_.isEmpty(value)) {
         TemplateVar.set('value', '0x' + value.replace('0x', ''));
-        TemplateVar.set('isChecksum', web3.isChecksumAddress(value));
+        TemplateVar.set('isChecksum', web3.utils.checkAddressChecksum(value));
 
         if (TemplateVar.get('ensAvailable')) {
           var ens = TemplateVar.get('ensContract');
@@ -208,9 +210,9 @@ Template.dapp_addressInput.events({
         TemplateVar.set(template, 'hasName', true);
         TemplateVar.set(template, 'isValid', true);
         TemplateVar.set(template, 'isChecksum', true);
-        TemplateVar.set(template, 'value', web3.toChecksumAddress(addr));
+        TemplateVar.set(template, 'value', web3.utils.toChecksumAddress(addr));
         TemplateVar.set(template, 'ensName', value);
-        // e.currentTarget.value = web3.toChecksumAddress(addr);
+        // e.currentTarget.value = web3.utils.toChecksumAddress(addr);
         // check name
         getName(addr, ens, function(name) {
           TemplateVar.set(template, 'ensName', name);
