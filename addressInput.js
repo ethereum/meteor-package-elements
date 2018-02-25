@@ -46,15 +46,20 @@ function getAddr(name, ens, callback) {
 
 function getName(address, ens, callback) {
   var resolverContract = new web3.eth.Contract(resolverContractAbi);
-
   var node = namehash(address.toLowerCase().replace('0x', '') + '.addr.reverse');
+
   // get a resolver address for that name
-  ens.methods.resolver(node).call().then(function(resolverAddress) {
+  ens.methods.resolver(node).call(function(error, resolverAddress) {
+    if (error) {
+      console.log('Error from ens getName: ', error);
+      return;
+    }
+
     if (resolverAddress != 0) {
       // if you find one, find the name on that resolver
       resolverContract.options.address = resolverAddress;
       resolverContract.methods.name(node, function(error, result) {
-        if (!err && result != 0 && callback) {
+        if (!error && result != 0 && callback) {
           callback(result);
         }
       });
