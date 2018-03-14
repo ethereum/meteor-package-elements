@@ -18,56 +18,73 @@ The cached identicons
 */
 var cache = {};
 
-Template['dapp_identicon'].helpers({
-    /**
+Template["dapp_identicon"].helpers({
+  /**
     Make sure the identity is lowercased
 
     @method (identity)
     */
-    'identity': function(identity){
-        return (_.isString(this.identity)) ? this.identity.toLowerCase() : this.identity;
-    },
-    /**
+  identity: function(identity) {
+    return _.isString(this.identity)
+      ? this.identity.toLowerCase()
+      : this.identity;
+  },
+  /**
     Return the cached or generated identicon
 
     @method (identiconData)
     */
-    'identiconData': function(identity){
-        // remove items if the cache is larger than 50 entries
-        if(_.size(cache) > 100) {
-            delete cache[Object.keys(cache)[0]];
-        }
+  identiconData: function(identity) {
+    // remove items if the cache is larger than 50 entries
+    if (_.size(cache) > 100) {
+      delete cache[Object.keys(cache)[0]];
+    }
 
-        return cache['ID_'+ identity] || (cache['ID_'+ identity] = hqx(hqx(blockies.create({
+    return (
+      cache["ID_" + identity] ||
+      (cache["ID_" + identity] = hqx(
+        hqx(
+          blockies.create({
             seed: identity,
             size: 8,
             scale: 1
-        }), 4),4).toDataURL());
-
-    },
-    /**
+          }),
+          4
+        ),
+        4
+      ).toDataURL())
+    );
+  },
+  /**
     Return the cached or generated identicon
 
     @method (identiconDataPixel)
     */
-    'identiconDataPixel': function(identity){
-        return cache['IDP_'+ identity] || (cache['IDP_'+ identity] = blockies.create({
-            seed: identity,
-            size: 8,
-            scale: 8
-        }).toDataURL());
-
-    },
-    /**
+  identiconDataPixel: function(identity) {
+    return (
+      cache["IDP_" + identity] ||
+      (cache["IDP_" + identity] = blockies
+        .create({
+          seed: identity,
+          size: 8,
+          scale: 8
+        })
+        .toDataURL())
+    );
+  },
+  /**
     Get the correct text, if TAPi18n is available.
 
     @method i18nText
     */
-    'i18nTextIcon': function(){
-        if(typeof TAPi18n === 'undefined' || TAPi18n.__('elements.identiconHelper') == 'elements.identiconHelper') {
-            return "This is a security icon, if there's any change on the address the resulting icon should be a completelly different one";
-        } else {
-            return TAPi18n.__('elements.identiconHelper');
-        }
+  i18nTextIcon: function() {
+    if (
+      typeof TAPi18n === "undefined" ||
+      TAPi18n.__("elements.identiconHelper") == "elements.identiconHelper"
+    ) {
+      return "This is a security icon, if there's any change on the address the resulting icon should be a completelly different one";
+    } else {
+      return TAPi18n.__("elements.identiconHelper");
     }
+  }
 });
