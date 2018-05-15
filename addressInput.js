@@ -296,7 +296,9 @@ var resolverContractAbi = [
 
 var ensAddress = "0x314159265dd8dbb310642f98f50c066173c1259b";
 
-function getAddr(name, ens, callback) {
+function getAddr(name, ens, template, callback) {
+  TemplateVar.set(template, "ensLoading", true);
+
   var resolverContract = new web3.eth.Contract(resolverContractAbi);
 
   var node = namehash(name);
@@ -312,15 +314,28 @@ function getAddr(name, ens, callback) {
           .addr(node)
           .call()
           .then(function(result) {
+            TemplateVar.set(template, "ensLoading", false);
             if (result != 0 && callback) {
               callback(result);
             }
+          })
+          .catch(function(error) {
+            console.log(error);
+            TemplateVar.set(template, "ensLoading", false);
           });
+      } else {
+        TemplateVar.set(template, "ensLoading", false);
       }
+    })
+    .catch(function(error) {
+      console.log(error);
+      TemplateVar.set(template, "ensLoading", false);
     });
 }
 
-function getName(address, ens, callback) {
+function getName(address, ens, template, callback) {
+  TemplateVar.set(template, "ensLoading", true);
+
   var resolverContract = new web3.eth.Contract(resolverContractAbi);
   var node = namehash(
     address.toLowerCase().replace("0x", "") + ".addr.reverse"
@@ -328,6 +343,8 @@ function getName(address, ens, callback) {
 
   // get a resolver address for that name
   ens.methods.resolver(node).call(function(error, resolverAddress) {
+    TemplateVar.set(template, "ensLoading", false);
+
     if (error) {
       console.log("Error from ens getName: ", error);
       return;
@@ -358,6 +375,8 @@ Template.dapp_addressInput.onCreated(function() {
   // default set to true, to show no error
   TemplateVar.set("isValid", true);
   TemplateVar.set("isChecksum", true);
+
+  TemplateVar.set(template, "ensLoading", false);
 
   if (this.data && this.data.value) {
     TemplateVar.set("value", this.data.value);
@@ -479,9 +498,9 @@ Template.dapp_addressInput.events({
           var ens = TemplateVar.get("ensContract");
 
           // if an address was added, check if there's a name associated with it
-          getName(value, ens, function(name) {
+          getName(value, ens, template, function(name) {
             // Any address can claim to be any name. Double check it!
-            getAddr(name, ens, function(addr) {
+            getAddr(name, ens, template, function(addr) {
               TemplateVar.set(template, "hasName", true);
               TemplateVar.set(template, "ensName", name);
               TemplateVar.set(template, "isValid", true);
@@ -505,7 +524,7 @@ Template.dapp_addressInput.events({
       TemplateVar.set("value", undefined);
       var ens = TemplateVar.get("ensContract");
 
-      getAddr(value, ens, function(addr) {
+      getAddr(value, ens, template, function(addr) {
         TemplateVar.set(template, "hasName", true);
         TemplateVar.set(template, "isValid", true);
         TemplateVar.set(template, "isChecksum", true);
@@ -513,7 +532,7 @@ Template.dapp_addressInput.events({
         TemplateVar.set(template, "ensName", value);
         // e.currentTarget.value = web3.utils.toChecksumAddress(addr);
         // check name
-        getName(addr, ens, function(name) {
+        getName(addr, ens, template, function(name) {
           TemplateVar.set(template, "ensName", name);
         });
       });
