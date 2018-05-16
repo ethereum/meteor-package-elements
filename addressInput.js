@@ -314,10 +314,10 @@ function getAddr(name, ens, template, callback) {
           .addr(node)
           .call()
           .then(function(result) {
-            TemplateVar.set(template, "ensLoading", false);
             if (result != 0 && callback) {
               callback(result);
             }
+            TemplateVar.set(template, "ensLoading", false);
           })
           .catch(function(error) {
             console.log(error);
@@ -343,8 +343,6 @@ function getName(address, ens, template, callback) {
 
   // get a resolver address for that name
   ens.methods.resolver(node).call(function(error, resolverAddress) {
-    TemplateVar.set(template, "ensLoading", false);
-
     if (error) {
       console.log("Error from ens getName: ", error);
       return;
@@ -359,6 +357,8 @@ function getName(address, ens, template, callback) {
         }
       });
     }
+
+    TemplateVar.set(template, "ensLoading", false);
   });
 }
 
@@ -536,7 +536,11 @@ Template.dapp_addressInput.events({
         TemplateVar.set(template, "value", web3.utils.toChecksumAddress(addr));
         TemplateVar.set(template, "ensName", value);
         // if field is not focused, set the address value immediately (otherwise, will happen on blur)
-        if (e.currentTarget !== e.currentTarget.activeElement) {
+        console.log(e);
+        console.log(e.currentTarget);
+        console.log(e.currentTarget.activeElement);
+        console.log(document.activeElement);
+        if (document.activeElement !== e.currentTarget) {
           e.currentTarget.value = web3.utils.toChecksumAddress(addr);
         }
         // check name
