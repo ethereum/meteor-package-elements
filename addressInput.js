@@ -505,8 +505,12 @@ Template.dapp_addressInput.events({
               TemplateVar.set(template, "ensName", name);
               TemplateVar.set(template, "isValid", true);
               TemplateVar.set(template, "isChecksum", true);
-              TemplateVar.set(template, "value", web3.toChecksumAddress(addr));
-              e.currentTarget.value = web3.toChecksumAddress(addr);
+              TemplateVar.set(
+                template,
+                "value",
+                web3.utils.toChecksumAddress(addr)
+              );
+              e.currentTarget.value = web3.utils.toChecksumAddress(addr);
             });
           });
         }
@@ -514,10 +518,11 @@ Template.dapp_addressInput.events({
         TemplateVar.set("value", undefined);
         TemplateVar.set("isChecksum", true);
       }
-
       e.currentTarget.value = value;
     } else if (TemplateVar.get("ensAvailable")) {
-      if (value.slice(-4) !== ".eth") value = value + ".eth";
+      if (value.slice(-4) !== ".eth") {
+        value = value + ".eth";
+      }
 
       TemplateVar.set("hasName", false);
       TemplateVar.set("isValid", false);
@@ -530,7 +535,10 @@ Template.dapp_addressInput.events({
         TemplateVar.set(template, "isChecksum", true);
         TemplateVar.set(template, "value", web3.utils.toChecksumAddress(addr));
         TemplateVar.set(template, "ensName", value);
-        // e.currentTarget.value = web3.utils.toChecksumAddress(addr);
+        // if field is not focused, set the address value immediately (otherwise, will happen on blur)
+        if (e.currentTarget !== e.currentTarget.activeElement) {
+          e.currentTarget.value = web3.utils.toChecksumAddress(addr);
+        }
         // check name
         getName(addr, ens, template, function(name) {
           TemplateVar.set(template, "ensName", name);
@@ -548,9 +556,9 @@ Template.dapp_addressInput.events({
       e.currentTarget.value = TemplateVar.get("ensName");
   },
   /**
-    Set the address while typing
+    Set the address on blur
 
-    @event input input, change input
+    @event blur input
     */
   "blur input": function(e, template) {
     var value = TemplateVar.get("value");
