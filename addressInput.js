@@ -536,10 +536,6 @@ Template.dapp_addressInput.events({
         TemplateVar.set(template, "value", web3.utils.toChecksumAddress(addr));
         TemplateVar.set(template, "ensName", value);
         // if field is not focused, set the address value immediately (otherwise, will happen on blur)
-        console.log(e);
-        console.log(e.currentTarget);
-        console.log(e.currentTarget.activeElement);
-        console.log(document.activeElement);
         if (document.activeElement !== e.currentTarget) {
           e.currentTarget.value = web3.utils.toChecksumAddress(addr);
         }
