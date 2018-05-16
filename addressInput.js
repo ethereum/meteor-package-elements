@@ -296,7 +296,9 @@ var resolverContractAbi = [
 
 var ensAddress = "0x314159265dd8dbb310642f98f50c066173c1259b";
 
-function getAddr(name, ens, callback) {
+function getAddr(name, ens, template, callback) {
+  TemplateVar.set(template, "ensLoading", true);
+
   var resolverContract = new web3.eth.Contract(resolverContractAbi);
 
   var node = namehash(name);
@@ -315,12 +317,25 @@ function getAddr(name, ens, callback) {
             if (result != 0 && callback) {
               callback(result);
             }
+            TemplateVar.set(template, "ensLoading", false);
+          })
+          .catch(function(error) {
+            console.log(error);
+            TemplateVar.set(template, "ensLoading", false);
           });
+      } else {
+        TemplateVar.set(template, "ensLoading", false);
       }
+    })
+    .catch(function(error) {
+      console.log(error);
+      TemplateVar.set(template, "ensLoading", false);
     });
 }
 
-function getName(address, ens, callback) {
+function getName(address, ens, template, callback) {
+  TemplateVar.set(template, "ensLoading", true);
+
   var resolverContract = new web3.eth.Contract(resolverContractAbi);
   var node = namehash(
     address.toLowerCase().replace("0x", "") + ".addr.reverse"
@@ -342,6 +357,8 @@ function getName(address, ens, callback) {
         }
       });
     }
+
+    TemplateVar.set(template, "ensLoading", false);
   });
 }
 
@@ -359,13 +376,15 @@ Template.dapp_addressInput.onCreated(function() {
   TemplateVar.set("isValid", true);
   TemplateVar.set("isChecksum", true);
 
+  TemplateVar.set(template, "ensLoading", false);
+
   if (this.data && this.data.value) {
     TemplateVar.set("value", this.data.value);
   }
 
   var ensContract = new web3.eth.Contract(ensContractAbi, ensAddress);
 
-  if (ensContract) {
+  if (Session.get("network") === "main") {
     TemplateVar.set(template, "ensContract", ensContract);
     TemplateVar.set(template, "ensAvailable", true);
   } else {
@@ -479,15 +498,19 @@ Template.dapp_addressInput.events({
           var ens = TemplateVar.get("ensContract");
 
           // if an address was added, check if there's a name associated with it
-          getName(value, ens, function(name) {
+          getName(value, ens, template, function(name) {
             // Any address can claim to be any name. Double check it!
-            getAddr(name, ens, function(addr) {
+            getAddr(name, ens, template, function(addr) {
               TemplateVar.set(template, "hasName", true);
               TemplateVar.set(template, "ensName", name);
               TemplateVar.set(template, "isValid", true);
               TemplateVar.set(template, "isChecksum", true);
-              TemplateVar.set(template, "value", web3.toChecksumAddress(addr));
-              e.currentTarget.value = web3.toChecksumAddress(addr);
+              TemplateVar.set(
+                template,
+                "value",
+                web3.utils.toChecksumAddress(addr)
+              );
+              e.currentTarget.value = web3.utils.toChecksumAddress(addr);
             });
           });
         }
@@ -495,25 +518,29 @@ Template.dapp_addressInput.events({
         TemplateVar.set("value", undefined);
         TemplateVar.set("isChecksum", true);
       }
-
       e.currentTarget.value = value;
     } else if (TemplateVar.get("ensAvailable")) {
-      if (value.slice(-4) !== ".eth") value = value + ".eth";
+      if (value.slice(-4) !== ".eth") {
+        value = value + ".eth";
+      }
 
       TemplateVar.set("hasName", false);
       TemplateVar.set("isValid", false);
       TemplateVar.set("value", undefined);
       var ens = TemplateVar.get("ensContract");
 
-      getAddr(value, ens, function(addr) {
+      getAddr(value, ens, template, function(addr) {
         TemplateVar.set(template, "hasName", true);
         TemplateVar.set(template, "isValid", true);
         TemplateVar.set(template, "isChecksum", true);
         TemplateVar.set(template, "value", web3.utils.toChecksumAddress(addr));
         TemplateVar.set(template, "ensName", value);
-        // e.currentTarget.value = web3.utils.toChecksumAddress(addr);
+        // if field is not focused, set the address value immediately (otherwise, will happen on blur)
+        if (document.activeElement !== e.currentTarget) {
+          e.currentTarget.value = web3.utils.toChecksumAddress(addr);
+        }
         // check name
-        getName(addr, ens, function(name) {
+        getName(addr, ens, template, function(name) {
           TemplateVar.set(template, "ensName", name);
         });
       });
@@ -529,9 +556,9 @@ Template.dapp_addressInput.events({
       e.currentTarget.value = TemplateVar.get("ensName");
   },
   /**
-    Set the address while typing
+    Set the address on blur
 
-    @event input input, change input
+    @event blur input
     */
   "blur input": function(e, template) {
     var value = TemplateVar.get("value");
