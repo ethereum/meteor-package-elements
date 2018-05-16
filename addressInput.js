@@ -384,7 +384,7 @@ Template.dapp_addressInput.onCreated(function() {
 
   var ensContract = new web3.eth.Contract(ensContractAbi, ensAddress);
 
-  if (ensContract) {
+  if (Session.get("network") === "main") {
     TemplateVar.set(template, "ensContract", ensContract);
     TemplateVar.set(template, "ensAvailable", true);
   } else {
