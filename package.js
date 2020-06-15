@@ -6,23 +6,21 @@ Package.describe({
 });
 
 Package.onUse(function(api) {
-  api.versionsFrom("1.2");
-  api.use("underscore", "client");
-  api.use("jquery", "client");
-  api.use("templating", "client");
-  api.use("reactive-var", "client");
-  api.use("less", "client");
-  api.use("standard-minifiers", "client");
+  api.versionsFrom('1.2');
+  api.use('underscore', 'client');
+  api.use('jquery', 'client');
+  api.use('templating', 'client');
+  api.use('reactive-var', 'client');
+  api.use('less', 'client');
+  api.use('standard-minifiers', 'client');
 
-  api.use("alexvandesande:identicon@2.0.2", "client");
-  api.use("3stack:bignumber@2.0.0", "client");
-  // api.use('underscorestring:underscore.string@3.1.1', 'client');
-
-  api.use("ethereum:web3@1.0.0-beta.33", "client");
+  api.use('alexvandesande:identicon@2.0.2', 'client');
+  api.use('ethereum:web3', 'client');
   api.use("ethereum:tools@1.0.0", "client");
-  api.use("frozeman:animation-helper@0.2.5", "client");
-  api.use("frozeman:storage@0.1.8", "client");
-  api.use("frozeman:template-var@1.2.2", "client");
+  api.use('frozeman:animation-helper@0.2.5', 'client');
+  api.use('frozeman:storage@0.1.8', 'client');
+  api.use('frozeman:template-var@1.2.2', 'client');
+
 
   // provide packages for the app developer as well
   api.imply(["frozeman:template-var", "ethereum:tools"], "client");
