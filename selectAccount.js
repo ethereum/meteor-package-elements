@@ -36,7 +36,8 @@ Template["dapp_selectAccount"].helpers({
     @method (selected)
     */
   selected: function() {
-    return TemplateVar.get("value") === this.address ? { selected: true } : {};
+    // console.log(TemplateVar.get("value"), this.address);
+    return TemplateVar.get("value").toLowerCase() === this.address.toLowerCase() ? { selected: true } : {};
   },
   /**
     Check if the current selected unit is not ether
